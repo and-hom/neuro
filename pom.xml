@@ -9,11 +9,15 @@
     <!-- project coordinates, i.e. a group of values which
 uniquely identify this project -->
 
-    <groupId>ru.ahomyakov</groupId>
+    <groupId>ru.ahomyakov.neuro</groupId>
     <artifactId>neuro</artifactId>
     <version>1.0</version>
     <name>Neuro</name>
     <packaging>pom</packaging>
+
+    <modules>
+        <module>commons</module>
+    </modules>
 
     <pluginRepositories>
         <pluginRepository>
