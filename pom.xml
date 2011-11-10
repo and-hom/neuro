@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- model version is always 4.0.0 for Maven 2.x POMs -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- project coordinates, i.e. a group of values which
+uniquely identify this project -->
+
+    <groupId>ru.ahomyakov</groupId>
+    <artifactId>neuro</artifactId>
+    <version>1.0</version>
+    <name>Neuro</name>
+    <packaging>pom</packaging>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>pmoproject-2rd-party</id>
+            <url>http://wiki.pmoproject.ru/nexus/content/repositories/snapshots</url>
+            <snapshots/>
+            <releases/>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+</project>
