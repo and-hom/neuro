@@ -15,15 +15,15 @@ class Layer(weights: Array[Array[Double]],
    */
   def toDatabaseObject: DBObject =
     MongoDBObject("matrix" -> weights.foldLeft("")
-      ((a, b) => (a + "::" + b.foldLeft("")
-        ((c, d) => (c + ":" + d)))));
+      ((a, b) => (a + (if (a.isEmpty) "::" else "") + b.foldLeft("")
+        ((c, d) => (c + (if (c.isEmpty) ":" else "") + d)))));
 
 
   /**
    * Выполнить преобразование слоя
    */
   def apply(input: Array[Double]): Array[Double] =
-    weights.map(x => multiplyV(input, x));
+    weights.map(x => aFunc(multiplyV(input, x)));
 
   protected def multiplyV(rowVector: Array[Double],
                           colVector: Array[Double]): Double =
