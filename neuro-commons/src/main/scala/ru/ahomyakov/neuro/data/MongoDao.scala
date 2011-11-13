@@ -8,13 +8,17 @@ import java.util.ArrayList
 import collection.mutable.Buffer
 
 
-class MongoDao(host: String, database: String, collection: String) {
+class MongoDao(host: String, database: String, collection: String) extends {
   def conn = MongoConnection(host).getDB(database).getCollection(collection);
 
-  def findById(id: String): Buffer[DBObject] =
+  override def findById(id: String): Buffer[DBObject] =
     JavaConverters.asScalaBufferConverter(
       conn.find(MongoDBObject("id" -> id)).toArray).asScala;
 
-  def store(obs: Iterable[DBObject]): WriteResult =
-    conn.insert(new ArrayList(JavaConverters.asJavaCollectionConverter(obs).asJavaCollection));
+  override def store(obs: List[DBObject]): WriteResult = multipleDBExec(
+    conn.remove(MongoDBObject("id" -> obs(0).get("id"))),
+    conn.insert(new ArrayList(JavaConverters.asJavaCollectionConverter(obs).asJavaCollection)));
+
+  protected  def multipleDBExec(results: WriteResult*): WriteResult =
+    results(0);
 }
