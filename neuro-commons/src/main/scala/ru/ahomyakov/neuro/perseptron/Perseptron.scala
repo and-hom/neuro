@@ -12,8 +12,7 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
   /**
    * f2(f1(input*A_1)*A_2)....
    */
-  def process(input: Array[Double],
-              layers: Array[Layer]): Array[Double] =
+  def process(input: Array[Double]): Array[Double] =
     layers.foldLeft(input)(
       (vect: Array[Double], layer: Layer) => layer.apply(vect));
 
