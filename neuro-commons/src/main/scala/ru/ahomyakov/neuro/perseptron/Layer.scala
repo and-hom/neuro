@@ -5,7 +5,10 @@ import com.mongodb.casbah.commons.MongoDBObject
 
 class Layer(weights: Array[Array[Double]],
             aFunc: Double => Double) {
-  def this(o: DBObject, aFunc: Double => Double) = this (dbObjectToMatrix(o), aFunc);
+  def this(o: DBObject, aFunc: Double => Double) =
+    this (o.get("matrix").toString.split("::").
+      map(col => col.split(":").
+      map(element => java.lang.Double.parseDouble(element))), aFunc);
 
   /**
    * Объект для сохранения в mongo
@@ -15,13 +18,6 @@ class Layer(weights: Array[Array[Double]],
       ((a, b) => (a + "::" + b.foldLeft("")
         ((c, d) => (c + ":" + d)))));
 
-  /**
-   * Десериализация массива из mongo
-   */
-  protected def dbObjectToMatrix(ob: DBObject): Array[Array[Double]] =
-    ob.get("matrix").toString.split("::").
-      map(col => col.split(":").
-      map(element => java.lang.Double.parseDouble(element)));
 
   /**
    * Выполнить преобразование слоя

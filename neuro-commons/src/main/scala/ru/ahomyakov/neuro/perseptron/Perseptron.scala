@@ -2,12 +2,12 @@ package ru.ahomyakov.neuro.perseptron
 
 import ru.ahomyakov.neuro.data.MongoDao
 
-class Perseptron(dao: MongoDao, layers: Layer*) {
+class Perseptron(dao: MongoDao, layers: Array[Layer]) {
   /**
    * Зачитываем персептрон из хранилища
    */
   def this(dao: MongoDao, id: String) =
-    this (dao, dao.findById(id).map(o => new Layer(o, x => x)));
+    this (dao, dao.findById(id).map(o => new Layer(o, (x => x):(Double=>Double))).toArray);
 
   /**
    * f2(f1(input*A_1)*A_2)....
@@ -17,11 +17,8 @@ class Perseptron(dao: MongoDao, layers: Layer*) {
     layers.foldLeft(input)(
       (vect: Array[Double], layer: Layer) => layer.apply(vect));
 
-  def process(input: Array[Double], id: String): Array[Double] =
-    process(input, load(id));
-
 
   def store(id: String) {
-    dao.store(layers.map(l => l.toDatabaseObject));
+    dao.store(layers.map(l => l.toDatabaseObject).toList);
   };
 }
