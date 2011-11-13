@@ -1,11 +1,16 @@
 package ru.ahomyakov.neuro
 
-import perseptron.Matrix
+import data.MongoDao
+import com.mongodb.casbah.commons.MongoDBObject
+
 
 object Main {
   def main(args: Array[String]) {
     println("Hello, World!")
-    println(Matrix.multiply(Array(1D, 2D, 3D), Array(Array(1D, 2D, 3D), Array(4D, 5D, 6D))))
+    var dao = new MongoDao("127.0.0.1", "neuro", "neuro");
+    dao.store(Array(MongoDBObject("id" -> "a", "value" -> "test")));
+    var found=dao.findById("a");
+    found.foreach(x => println(x));
   }
 }
 
