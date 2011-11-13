@@ -27,7 +27,7 @@ class Layer(weights: Array[Array[Double]],
 
   protected def multiplyV(rowVector: Array[Double],
                           colVector: Array[Double]): Double =
-    (for (i: Int <- 0 to rowVector.length)
+    (for (i: Int <- 0 to rowVector.length - 1)
     yield rowVector(i) * colVector(i)).
       foldLeft(0D)(_ + _);
 }
