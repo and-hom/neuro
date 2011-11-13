@@ -15,8 +15,8 @@ class Layer(weights: Array[Array[Double]],
    */
   def toDatabaseObject: DBObject =
     MongoDBObject("matrix" -> weights.foldLeft("")
-      ((a, b) => (a + (if (a.isEmpty) "::" else "") + b.foldLeft("")
-        ((c, d) => (c + (if (c.isEmpty) ":" else "") + d)))));
+      ((a, b) => (a + (if (a.isEmpty) "" else "::") + b.foldLeft("")
+        ((c, d) => (c + (if (c.isEmpty) "" else ":") + d)))));
 
 
   /**
