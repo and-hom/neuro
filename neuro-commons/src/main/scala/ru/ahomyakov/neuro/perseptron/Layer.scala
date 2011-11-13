@@ -30,4 +30,16 @@ class Layer(weights: Array[Array[Double]],
     (for (i: Int <- 0 to rowVector.length - 1)
     yield rowVector(i) * colVector(i)).
       foldLeft(0D)(_ + _);
+
+  /**
+   * Обратное распространение ошибки
+   */
+//  protected def errorBackTrace(input: Array[Double],
+//                               requiredOutput: Array[Double],
+//                               realOutput: Array[Double],
+//                               teachingCoeff: Double): Layer =
+//  new Layer(weights.map(col => ),aFunc);
+//    for(i <- 0 to requiredOutput.length-1) yield
+//      (requiredOutput(i)-realOutput(i))*teachingCoeff
+
 }
