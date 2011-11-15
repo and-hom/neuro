@@ -43,6 +43,6 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
    * сделать из персептрона новый с добавлением слоя в начало.
    * используется при обратном распространении ошибки
    */
-//  def addLayerToBegin(layer: Layer): Perseptron =
-//    new Perseptron(dao, layer :: layers);
+  def addLayerToBegin(layer: Layer): Perseptron =
+    new Perseptron(dao, (layer :: layers.toList).toArray);
 }
