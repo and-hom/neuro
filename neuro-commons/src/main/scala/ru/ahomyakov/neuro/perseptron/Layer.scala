@@ -60,8 +60,10 @@ class Layer(weights: Array[Array[Double]],
    * Корректировка весов
    */
   def correctWeights(err: Seq[Double]): Layer = this;
-  //    new Layer(weights.map(col =>), aFunc);
-  //  for (i <- 0 to requiredOutput.length - 1) yield
-  //    (requiredOutput(i) - realOutput(i)) * teachingCoeff
+      new Layer(correctWeightsMatrix(err), aFunc,dAFuncDx);
+//
+//  def correctWeightsMatrix(err: Seq[Double]): Array[Array[Double]] =
+//    for (i <- 0 to requiredOutput.length - 1) yield
+//      (requiredOutput(i) - realOutput(i)) * teachingCoeff
 
 }
