@@ -44,19 +44,22 @@ class Layer(weights: Array[Array[Double]],
 
   protected def multiplyV(rowVector: Array[Double],
                           colVector: Array[Double]): Double =
-    (for (i: Int <- 0 to rowVector.length - 1)
-    yield rowVector(i) * colVector(i)).
-      foldLeft(0D)(_ + _);
+    (for (i: Int <- 0 to rowVector.length - 1) yield
+      rowVector(i) * colVector(i)).foldLeft(0D)(_ + _);
 
   /**
    * Обратное распространение ошибки
    */
-  def errorBackTrace(err: Double): Double = err;
+  def errorBackTrace(err: Seq[Double]): Seq[Double] =
+    (for (i <- 0 to weights(1).length - 1) yield
+      (for (j <- 0 to weights.length - 1) yield
+        dAFuncDx(err(j)) * weights(j)(i)).foldLeft(0D)(_ + _));
+
 
   /**
    * Корректировка весов
    */
-  def correctWeights(err: Double): Layer = this;
+  def correctWeights(err: Seq[Double]): Layer = this;
   //    new Layer(weights.map(col =>), aFunc);
   //  for (i <- 0 to requiredOutput.length - 1) yield
   //    (requiredOutput(i) - realOutput(i)) * teachingCoeff

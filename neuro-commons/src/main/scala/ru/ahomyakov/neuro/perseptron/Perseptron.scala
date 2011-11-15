@@ -44,23 +44,16 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
 
   protected def err(requiredOutput: Array[Double],
                     realOutput: Array[Double],
-                    teachingCoeff: Double): Double = 0;
+                    teachingCoeff: Double): Seq[Double] =
+    for (i <- 0 to requiredOutput.length - 1) yield
+      (requiredOutput(i) - realOutput(i)) *
+        requiredOutput(i) * (1 - requiredOutput(i)) *
+        teachingCoeff;
 
-  protected def errorBackTrace(err: Double,
+  protected def errorBackTrace(err: Seq[Double],
                                layers: List[Layer]): List[Layer] =
     layers match {
       case Nil => Nil;
       case head :: tail => head.correctWeights(err) :: errorBackTrace(head.errorBackTrace(err), tail);
     }
-
-  //    layers.foldRight(new Perseptron(dao, Array[Layer]))(
-  //      (l: Layer, p: Perseptron) => (p.addLayerToBegin(l.correctWeights())));
-
-
-  /**
-   * сделать из персептрона новый с добавлением слоя в начало.
-   * используется при обратном распространении ошибки
-   */
-  def addLayerToBegin(layer: Layer): Perseptron =
-    new Perseptron(dao, (layer :: layers.toList).toArray);
 }
