@@ -5,26 +5,27 @@ import com.mongodb.casbah.commons.MongoDBObject
 import util.Random
 
 class Layer(weights: Array[Array[Double]],
-            aFunc: Double => Double) {
+            aFunc: Double => Double,
+            dAFuncDx: Double => Double) {
   /**
    * Инициализация слоя из сохранённого в б/д json-объекта
    */
-  def this(o: DBObject, aFunc: Double => Double) =
+  def this(o: DBObject, aFunc: Double => Double, dAFuncDx: Double => Double) =
     this (o.get("matrix").toString.split("::").
       map(col => col.split(":").
-      map(element => java.lang.Double.parseDouble(element))), aFunc);
+      map(element => java.lang.Double.parseDouble(element))), aFunc, dAFuncDx);
 
   /**
    * Инициализация слоя указанной размерности случайными весами
    */
   def this(inputs: Int,
            outputs: Int,
-           aFunc: Double => Double) =
+           aFunc: Double => Double,
+           dAFuncDx: Double => Double) =
     this (
       (for (i <- 0 to outputs - 1) yield
         (for (j <- 0 to inputs - 1) yield
-          scala.math.abs(Random.nextDouble()) % 1D).
-          toArray).toArray, aFunc);
+          Random.nextDouble() % 1D).toArray).toArray, aFunc, dAFuncDx);
 
   /**
    * Объект для сохранения в mongo
@@ -50,12 +51,14 @@ class Layer(weights: Array[Array[Double]],
   /**
    * Обратное распространение ошибки
    */
-  //  protected def errorBackTrace(input: Array[Double],
-  //                               requiredOutput: Array[Double],
-  //                               realOutput: Array[Double],
-  //                               teachingCoeff: Double): Layer =
-  //  new Layer(weights.map(col => ),aFunc);
-  //    for(i <- 0 to requiredOutput.length-1) yield
-  //      (requiredOutput(i)-realOutput(i))*teachingCoeff
+  def errorBackTrace(err: Double): Double = err;
+
+  /**
+   * Корректировка весов
+   */
+  def correctWeights(err: Double): Layer = this;
+  //    new Layer(weights.map(col =>), aFunc);
+  //  for (i <- 0 to requiredOutput.length - 1) yield
+  //    (requiredOutput(i) - realOutput(i)) * teachingCoeff
 
 }
