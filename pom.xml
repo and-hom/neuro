@@ -17,6 +17,7 @@ uniquely identify this project -->
 
     <modules>
         <module>neuro-commons</module>
+        <module>neuro-old</module>
     </modules>
 
     <repositories>
