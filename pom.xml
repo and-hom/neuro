@@ -43,8 +43,6 @@ uniquely identify this project -->
     </pluginRepositories>
 
     <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -77,26 +75,26 @@ uniquely identify this project -->
                 <artifactId>scala-library</artifactId>
                 <version>${scala.version}</version>
             </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-query_${scala.version}</artifactId>
-            <version>${casbah.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-core_${scala.version}</artifactId>
-            <version>${casbah.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-commons_${scala.version}</artifactId>
-            <version>${casbah.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-gridfs_${scala.version}</artifactId>
-            <version>${casbah.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.mongodb.casbah</groupId>
+                <artifactId>casbah-query_${scala.version}</artifactId>
+                <version>${casbah.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mongodb.casbah</groupId>
+                <artifactId>casbah-core_${scala.version}</artifactId>
+                <version>${casbah.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mongodb.casbah</groupId>
+                <artifactId>casbah-commons_${scala.version}</artifactId>
+                <version>${casbah.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mongodb.casbah</groupId>
+                <artifactId>casbah-gridfs_${scala.version}</artifactId>
+                <version>${casbah.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

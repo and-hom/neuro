@@ -33,14 +33,25 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
   };
 
   /**
-   * Обратное распространение ошибки
+   * Обратное распространение ошибки, Прямой и
+   * обратный ход при помощи системного стека
    */
-  def errorBackTrace(requiredOutput: Array[Double],
-                     realOutput: Array[Double],
+  def errorBackTrace(input: Array[Double],
+                     requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
-    new Perseptron(dao, errorBackTrace(
-      err(requiredOutput, realOutput, teachingCoeff),
-      layers.toList.reverse).reverse.toArray);
+    new Perseptron(dao, errorBackTrace(input, requiredOutput, layers.toList).toArray);
+
+  /**
+   * Предварительно считаем все вектора ошибок
+   */
+  protected def errs(err: Array[Double],
+                     teachingCoeff: Double,
+                     layersReversed: List[Layer]): List[Array[Double]] =
+    layersReversed match {
+      case Nil => Nil;
+      case head :: tail => head.errorBackTrace(err) ::
+        errs(head.errorBackTrace(err), teachingCoeff, tail);
+    };
 
   protected def err(requiredOutput: Array[Double],
                     realOutput: Array[Double],
@@ -50,10 +61,21 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
         requiredOutput(i) * (1 - requiredOutput(i)) *
         teachingCoeff;
 
-  protected def errorBackTrace(err: Seq[Double],
+  protected def errorBackTrace(input: Array[Double],
+                               requiredOutput: Array[Double],
                                layers: List[Layer]): List[Layer] =
     layers match {
       case Nil => Nil;
-      case head :: tail => head.correctWeights(err) :: errorBackTrace(head.errorBackTrace(err), tail);
+      case head :: Nil => head.correctWeights(err(requiredOutput, head.apply(input), head));
+      case head :: tail => errorBackTrace(head.apply(input), requiredOutput, tail);
     }
+
+  /**
+   * Прогоняем ошибку через последний слой
+   */
+  protected def err(input: Array[Double],
+                    error: Array[Double],
+                    layer: Layer): Array[Double] {
+
+  }
 }
