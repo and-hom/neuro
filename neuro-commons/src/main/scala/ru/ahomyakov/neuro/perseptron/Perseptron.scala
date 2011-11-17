@@ -46,12 +46,12 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
    */
   protected def errs(err: Array[Double],
                      teachingCoeff: Double,
-                     layersReversed: List[Layer]): List[Array[Double]] =
-    layersReversed match {
-      case Nil => Nil;
-      case head :: tail => head.errorBackTrace(err) ::
-        errs(head.errorBackTrace(err), teachingCoeff, tail);
-    };
+                     layersReversed: List[Layer]):
+  List[Array[Double]] =
+    layers.foldRight(List(): List[Array[Double]])(
+      (layer: Layer, list: List[Array[Double]]) =>
+        ((if (list.length == 0) err else list(0)) :: list));
+
 
   protected def err(requiredOutput: Array[Double],
                     realOutput: Array[Double],
