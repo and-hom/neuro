@@ -12,8 +12,25 @@ import ru.mai.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.mai.neuro.perseptron.interfaces.Layer;
 import ru.mai.neuro.perseptron.interfaces.NeuroNet;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.GroupLayout;
+import javax.swing.JApplet;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.LayoutStyle;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
@@ -24,11 +41,11 @@ import java.util.List;
 /**
  * @author and_hom
  */
-public class MainForm extends javax.swing.JFrame {
+public class MainApplet extends JApplet {
 
     private boolean teachMode = true;
-    private List<Point.Double> teachGroup1 = new LinkedList<Double>();
-    private List<Point.Double> teachGroup2 = new LinkedList<Double>();
+    private List<Double> teachGroup1 = new LinkedList<Double>();
+    private List<Double> teachGroup2 = new LinkedList<Double>();
     private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
     private NeuroNet neuroNet;
     private double eta = 0.3;
@@ -37,7 +54,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public MainApplet() {
         initComponents();
         teachModeButton.setSelected(teachMode);
         if (teachMode) {
@@ -50,7 +67,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void buildNeuroNet() {
         neuroNet = new NeuroNetImpl();
-        Layer layer = new LayerImpl(2, 4, new SigmaFunction(1,0,1,1));
+        Layer layer = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
         neuroNet.addLayer(layer);
         layer = new LayerImpl(4, 1, new BarierFunction());
         neuroNet.addLayer(layer);
@@ -64,160 +81,167 @@ public class MainForm extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
+        GridBagConstraints gridBagConstraints;
 
-        jPanel2 = new javax.swing.JPanel();
-        teachModeButton = new javax.swing.JToggleButton();
-        fillAreasButton = new javax.swing.JToggleButton();
-        teachButton = new javax.swing.JButton();
-        testButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cycleCount = new javax.swing.JTextField();
-        resetButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
-        drawPanel = new javax.swing.JPanel();
+        drawPanel = new JPanel();
+        jPanel2 = new JPanel();
+        teachModeButton = new JToggleButton();
+        fillAreasButton = new JToggleButton();
+        teachButton = new JButton();
+        testButton = new JButton();
+        jLabel1 = new JLabel();
+        cycleCount = new JTextField();
+        resetButton = new JButton();
+        exitButton = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                drawPanelMouseClicked(evt);
+            }
 
-        teachModeButton.setText("Teach"); // NOI18N
+            public void mousePressed(MouseEvent evt) {
+                drawPanelMousePressed(evt);
+            }
+        });
+
+        GroupLayout drawPanelLayout = new GroupLayout(drawPanel);
+        drawPanel.setLayout(drawPanelLayout);
+        drawPanelLayout.setHorizontalGroup(
+                drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 470, Short.MAX_VALUE)
+        );
+        drawPanelLayout.setVerticalGroup(
+                drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 373, Short.MAX_VALUE)
+        );
+
+        jPanel2.setLayout(new GridBagLayout());
+
+        teachModeButton.setText("Teach");
         teachModeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teachModeButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(teachModeButton, gridBagConstraints);
 
-        fillAreasButton.setText("Fill areas"); // NOI18N
+        fillAreasButton.setText("Fill areas");
         fillAreasButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fillAreasButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(fillAreasButton, gridBagConstraints);
 
-        teachButton.setText("Teach"); // NOI18N
+        teachButton.setText("Teach");
         teachButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 teachButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(teachButton, gridBagConstraints);
 
-        testButton.setText("Test"); // NOI18N
+        testButton.setText("Test");
         testButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(testButton, gridBagConstraints);
 
-        jLabel1.setText("Teach cycle count"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        jLabel1.setText("Teach cycle count");
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(jLabel1, gridBagConstraints);
 
-        cycleCount.setText("20000"); // NOI18N
+        cycleCount.setText("20000");
         cycleCount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cycleCountActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         jPanel2.add(cycleCount, gridBagConstraints);
 
-        resetButton.setText("Reset!"); // NOI18N
+        resetButton.setText("Reset!");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 100);
         jPanel2.add(resetButton, gridBagConstraints);
 
-        exitButton.setText("Exit :("); // NOI18N
+        exitButton.setText("Exit :(");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 100);
         jPanel2.add(exitButton, gridBagConstraints);
 
-        drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                drawPanelMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                drawPanelMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
-        drawPanel.setLayout(drawPanelLayout);
-        drawPanelLayout.setHorizontalGroup(
-            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
-        );
-        drawPanelLayout.setVerticalGroup(
-            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                        .addComponent(drawPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(drawPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void drawPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseClicked
+    private void teachModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachModeButtonActionPerformed
+        teachMode = teachModeButton.isSelected();
+        if (teachMode) {
+            teachModeButton.setText("Test mode");
+        } else {
+            teachModeButton.setText("TeachMode");
+        }
+    }//GEN-LAST:event_teachModeButtonActionPerformed
+
+    private void drawPanelMouseClicked(MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseClicked
 
     }//GEN-LAST:event_drawPanelMouseClicked
 
-    private void drawPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
+    private void drawPanelMousePressed(MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
         if (teachMode) {
             if (evt.getButton() == MouseEvent.BUTTON1) {
                 teachGroup1.add(screen2virtual(evt.getPoint()));
@@ -230,18 +254,6 @@ public class MainForm extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_drawPanelMousePressed
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        neuroNet.reset();
-        testGroup.clear();
-        teachGroup1.clear();
-        teachGroup2.clear();
-        repaint();
-    }//GEN-LAST:event_resetButtonActionPerformed
-
     private void cycleCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cycleCountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cycleCountActionPerformed
@@ -249,7 +261,7 @@ public class MainForm extends javax.swing.JFrame {
     private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
         double[] input = new double[2];
         for (ExperimentalResult experimentalResult : testGroup) {
-            //            experimentalResult.setFromFirstCollection(null)
+//            experimentalResult.setFromFirstCollection(null)
             input[0] = experimentalResult.getPoint().x;
             input[1] = experimentalResult.getPoint().y;
             if (neuroNet.operate(input)[0] >= 0.5) {
@@ -264,12 +276,12 @@ public class MainForm extends javax.swing.JFrame {
     private void teachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachButtonActionPerformed
         List<ExperimentalResult> results = merge(teachGroup1, teachGroup2);
         neuroNet.reset();
-        int selectedCycleCount = 200000;
+        int selectedCycleCount = 20000;
         try {
             selectedCycleCount = Integer.valueOf(this.cycleCount.getText());
         } catch (Exception e) {
-            this.cycleCount.setText("200000");
-            JOptionPane.showMessageDialog(this, "Invalid cycle count - using 200000");
+            this.cycleCount.setText("20000");
+            JOptionPane.showMessageDialog(this, "Invalid cycle count - using 20000");
         }
         double[] success = new double[]{1d};
         double[] fail = new double[]{0d};
@@ -288,20 +300,22 @@ public class MainForm extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_teachButtonActionPerformed
 
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        testGroup.clear();
+        teachGroup1.clear();
+        teachGroup2.clear();
+        repaint();
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
     private void fillAreasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillAreasButtonActionPerformed
         fillAreas = fillAreasButton.isSelected();
         testButtonActionPerformed(evt);
         repaint();
     }//GEN-LAST:event_fillAreasButtonActionPerformed
-
-    private void teachModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachModeButtonActionPerformed
-        teachMode = teachModeButton.isSelected();
-        if (teachMode) {
-            teachModeButton.setText("Test mode");
-        } else {
-            teachModeButton.setText("TeachMode");
-        }
-    }//GEN-LAST:event_teachModeButtonActionPerformed
 
     private List<ExperimentalResult> merge(List<Double> teachGroup1, List<Double> teachGroup2) {
         List<ExperimentalResult> results = new ArrayList<ExperimentalResult>(teachGroup1.size() + teachGroup2.size() + 5);
@@ -322,13 +336,13 @@ public class MainForm extends javax.swing.JFrame {
         Stroke st4 = new BasicStroke(4);
         Graphics2D graphics2D = (Graphics2D) drawPanel.getGraphics();
         for (double x = 0; x <= 1; x += 0.1) {
-            Point from = virtual2screen(new Point.Double(x, 0));
-            Point to = virtual2screen(new Point.Double(x, 1));
+            Point from = virtual2screen(new Double(x, 0));
+            Point to = virtual2screen(new Double(x, 1));
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         for (double y = 0; y <= 1; y += 0.1) {
-            Point from = virtual2screen(new Point.Double(0, y));
-            Point to = virtual2screen(new Point.Double(1, y));
+            Point from = virtual2screen(new Double(0, y));
+            Point to = virtual2screen(new Double(1, y));
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         graphics2D.setStroke(st4);
@@ -373,11 +387,11 @@ public class MainForm extends javax.swing.JFrame {
                     src[1] = point.y;
                     if (neuroNet.operate(src)[0] >= 0.5) {
                         graphics2D.setColor(Color.BLUE);
-                        graphics2D.drawLine(x - 1, y - 1, x + 1, y + 1);
-                        graphics2D.drawLine(x - 1, y + 1, x + 1, y - 1);
                     } else {
                         graphics2D.setColor(Color.RED);
                     }
+                    graphics2D.drawLine(x - 1, y - 1, x + 1, y + 1);
+                    graphics2D.drawLine(x - 1, y + 1, x + 1, y - 1);
                 }
             }
         }
@@ -402,7 +416,7 @@ public class MainForm extends javax.swing.JFrame {
      * @param p
      * @return
      */
-    private Point.Double screen2virtual(Point p) {
+    private Double screen2virtual(Point p) {
         double x = (double) p.x / (double) drawPanel.getWidth();
         double y = (double) p.y / (double) drawPanel.getHeight();
         return new Double(x, y);
@@ -412,7 +426,7 @@ public class MainForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new MainForm().setVisible(true);
@@ -421,15 +435,15 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cycleCount;
-    private javax.swing.JPanel drawPanel;
-    private javax.swing.JButton exitButton;
-    private javax.swing.JToggleButton fillAreasButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton resetButton;
-    private javax.swing.JButton teachButton;
-    private javax.swing.JToggleButton teachModeButton;
-    private javax.swing.JButton testButton;
+    private JTextField cycleCount;
+    private JPanel drawPanel;
+    private JButton exitButton;
+    private JToggleButton fillAreasButton;
+    private JLabel jLabel1;
+    private JPanel jPanel2;
+    private JButton resetButton;
+    private JButton teachButton;
+    private JToggleButton teachModeButton;
+    private JButton testButton;
     // End of variables declaration//GEN-END:variables
 }

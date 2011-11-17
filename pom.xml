@@ -16,7 +16,7 @@ uniquely identify this project -->
     <packaging>pom</packaging>
 
     <modules>
-        <module>neuro-commons</module>
+        <!--<module>neuro-commons</module>-->
         <module>neuro-old</module>
     </modules>
 

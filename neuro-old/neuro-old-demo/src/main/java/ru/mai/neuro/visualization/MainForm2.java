@@ -5,40 +5,47 @@
  */
 package ru.mai.neuro.visualization;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.event.ChangeEvent;
-import ru.mai.neuro.errors.IllegalDimensionException;
 import ru.mai.neuro.errors.IllegalInitDataException;
-import ru.mai.neuro.errors.NetIsNotInitalizedExceprion;
-import ru.mai.neuro.kurs.*;
+import ru.mai.neuro.kurs.ExperimentalResult;
+import ru.mai.neuro.kurs.SofmPoint;
 import ru.mai.neuro.perseptron.impl.LayerImpl;
 import ru.mai.neuro.perseptron.impl.NeuroNetImpl;
 import ru.mai.neuro.perseptron.impl.functions.BarierFunction;
 import ru.mai.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.mai.neuro.perseptron.interfaces.Layer;
 import ru.mai.neuro.perseptron.interfaces.NeuroNet;
+import ru.mai.neuro.sofm.impl.EuclidVectorSimilarityRate;
+import ru.mai.neuro.sofm.impl.SOFMImpl;
+import ru.mai.neuro.sofm.impl.regressor.GeometricEduactionRateRegressor;
+import ru.mai.neuro.sofm.interfaces.SOFM;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.event.ChangeListener;
-import ru.mai.neuro.sofm.impl.SOFMImpl;
-import ru.mai.neuro.sofm.interfaces.SOFM;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author and_hom
  */
-public class MainApplet2 extends JApplet {
+public class MainForm2 extends javax.swing.JFrame {
 
     private boolean teachMode = true;
-    private List<Double> teachGroup1 = new LinkedList<Double>();
-    private List<Double> teachGroup2 = new LinkedList<Double>();
+    private List<Point.Double> teachGroup1 = new LinkedList<Double>();
+    private List<Point.Double> teachGroup2 = new LinkedList<Double>();
     private List<SofmPoint> sofmPoints = new LinkedList<SofmPoint>();
     private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
     private NeuroNet neuroNet;
@@ -50,7 +57,7 @@ public class MainApplet2 extends JApplet {
     /**
      * Creates new form MainForm
      */
-    public MainApplet2() {
+    public MainForm2() {
         initComponents();
         teachModeButton.setSelected(teachMode);
         if (teachMode) {
@@ -70,7 +77,7 @@ public class MainApplet2 extends JApplet {
 
     private void buildSOFM() {
         try {
-            sofm = new SOFMImpl();
+            sofm = new SOFMImpl(new GeometricEduactionRateRegressor(0.7),new EuclidVectorSimilarityRate(),0.9);
             sofm.init(clusterCount, new double[]{0.5, 0.5});
         } catch (IllegalInitDataException ex) {
             Logger.getLogger(MainForm2.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,13 +99,13 @@ public class MainApplet2 extends JApplet {
 
 
         for (double x = 0; x <= 1; x += 0.1) {
-            Point from = virtual2screen(new Double(x, 0), drawPanel);
-            Point to = virtual2screen(new Double(x, 1), drawPanel);
+            Point from = virtual2screen(new Point.Double(x, 0), drawPanel);
+            Point to = virtual2screen(new Point.Double(x, 1), drawPanel);
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         for (double y = 0; y <= 1; y += 0.1) {
-            Point from = virtual2screen(new Double(0, y), drawPanel);
-            Point to = virtual2screen(new Double(1, y), drawPanel);
+            Point from = virtual2screen(new Point.Double(0, y), drawPanel);
+            Point to = virtual2screen(new Point.Double(1, y), drawPanel);
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         graphics2D.setStroke(st4);
@@ -160,19 +167,19 @@ public class MainApplet2 extends JApplet {
         }
         graphics2D.setStroke(new BasicStroke(1));
         for (double x = 0; x <= 1; x += 0.1) {
-            Point from = virtual2screen(new Double(x, 0), sofmPanel);
-            Point to = virtual2screen(new Double(x, 1), sofmPanel);
+            Point from = virtual2screen(new Point.Double(x, 0), sofmPanel);
+            Point to = virtual2screen(new Point.Double(x, 1), sofmPanel);
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         for (double y = 0; y <= 1; y += 0.1) {
-            Point from = virtual2screen(new Double(0, y), sofmPanel);
-            Point to = virtual2screen(new Double(1, y), sofmPanel);
+            Point from = virtual2screen(new Point.Double(0, y), sofmPanel);
+            Point to = virtual2screen(new Point.Double(1, y), sofmPanel);
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         graphics2D.setStroke(new BasicStroke(2));
         for (int i=0;i<sofm.getClusters().length;i++) {
             double[] d=sofm.getClusters()[i];
-            graphics2D.setColor(new Color(i*100%255, i*57%255, i*11%255));
+            graphics2D.setColor(new Color(i*121%255, i*97%255, i*51%255));
             Point p = virtual2screen(new Double(d[0], d[1]), sofmPanel);
             graphics2D.drawLine(p.x - 3, p.y - 3, p.x + 3, p.y + 3);
             graphics2D.drawLine(p.x - 3, p.y + 3, p.x + 3, p.y - 3);
@@ -180,7 +187,7 @@ public class MainApplet2 extends JApplet {
         graphics2D.setColor(Color.BLACK);
         graphics2D.setStroke(new BasicStroke(4));
         for (SofmPoint point : sofmPoints) {
-            graphics2D.setColor(new Color(point.getClusterNumber()*100%255, point.getClusterNumber()*57%255, point.getClusterNumber()*11%255));
+            graphics2D.setColor(new Color(point.getClusterNumber()*121%255, point.getClusterNumber()*97%255, point.getClusterNumber()*51%255));
             Point p = virtual2screen(point, sofmPanel);
             graphics2D.drawLine(p.x - 1, p.y - 1, p.x + 1, p.y + 1);
             graphics2D.drawLine(p.x - 1, p.y + 1, p.x + 1, p.y - 1);
@@ -196,51 +203,55 @@ public class MainApplet2 extends JApplet {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        GridBagConstraints gridBagConstraints;
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jTabbedPane1 = new JTabbedPane();
-        jPanel3 = new JPanel();
-        drawPanel = new JPanel();
-        jPanel2 = new JPanel();
-        teachModeButton = new JToggleButton();
-        fillAreasButton = new JToggleButton();
-        teachButton = new JButton();
-        testButton = new JButton();
-        jLabel1 = new JLabel();
-        cycleCount = new JTextField();
-        resetButton = new JButton();
-        jPanel1 = new JPanel();
-        jPanel4 = new JPanel();
-        jLabel2 = new JLabel();
-        clusterCountBox = new JTextField();
-        sofmResetButton = new JButton();
-        sofmPanel = new JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        drawPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        teachModeButton = new javax.swing.JToggleButton();
+        fillAreasButton = new javax.swing.JToggleButton();
+        teachButton = new javax.swing.JButton();
+        testButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cycleCount = new javax.swing.JTextField();
+        resetButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        clusterCountBox = new javax.swing.JTextField();
+        sofmResetButton = new javax.swing.JButton();
+        sofmPanel = new javax.swing.JPanel();
 
-        jPanel3.setLayout(new BorderLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
         drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 drawPanelMouseClicked(evt);
             }
-            public void mousePressed(MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawPanelMousePressed(evt);
             }
         });
 
-        GroupLayout drawPanelLayout = new GroupLayout(drawPanel);
+        javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
-            drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 465, Short.MAX_VALUE)
         );
         drawPanelLayout.setVerticalGroup(
-            drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 386, Short.MAX_VALUE)
         );
 
-        jPanel3.add(drawPanel, BorderLayout.CENTER);
+        jPanel3.add(drawPanel, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setLayout(new GridBagLayout());
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         teachModeButton.setText("Teach"); // NOI18N
         teachModeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -248,10 +259,10 @@ public class MainApplet2 extends JApplet {
                 teachModeButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(teachModeButton, gridBagConstraints);
 
         fillAreasButton.setText("Fill areas"); // NOI18N
@@ -260,10 +271,10 @@ public class MainApplet2 extends JApplet {
                 fillAreasButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(fillAreasButton, gridBagConstraints);
 
         teachButton.setText("Teach"); // NOI18N
@@ -272,10 +283,10 @@ public class MainApplet2 extends JApplet {
                 teachButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(teachButton, gridBagConstraints);
 
         testButton.setText("Test"); // NOI18N
@@ -284,17 +295,17 @@ public class MainApplet2 extends JApplet {
                 testButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(testButton, gridBagConstraints);
 
         jLabel1.setText("Teach cycle count"); // NOI18N
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(jLabel1, gridBagConstraints);
 
         cycleCount.setText("20000"); // NOI18N
@@ -303,10 +314,10 @@ public class MainApplet2 extends JApplet {
                 cycleCountActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(cycleCount, gridBagConstraints);
 
         resetButton.setText("Reset!"); // NOI18N
@@ -315,38 +326,44 @@ public class MainApplet2 extends JApplet {
                 resetButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new Insets(0, 0, 0, 100);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
         jPanel2.add(resetButton, gridBagConstraints);
 
-
-        gridBagConstraints = new GridBagConstraints();
+        exitButton.setText("Exit :("); // NOI18N
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new Insets(0, 0, 0, 100);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
+        jPanel2.add(exitButton, gridBagConstraints);
 
-        jPanel3.add(jPanel2, BorderLayout.SOUTH);
+        jPanel3.add(jPanel2, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("2 layer perseptron", jPanel3);
 
-        jPanel1.setLayout(new BorderLayout());
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setLayout(new GridBagLayout());
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setText("Cluster number");
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel4.add(jLabel2, gridBagConstraints);
 
         clusterCountBox.setText("10");
-        clusterCountBox.setPreferredSize(new Dimension(100, 20));
-        jPanel4.add(clusterCountBox, new GridBagConstraints());
+        clusterCountBox.setPreferredSize(new java.awt.Dimension(100, 20));
+        jPanel4.add(clusterCountBox, new java.awt.GridBagConstraints());
 
         sofmResetButton.setText("Reset");
         sofmResetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -354,44 +371,46 @@ public class MainApplet2 extends JApplet {
                 sofmResetButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         jPanel4.add(sofmResetButton, gridBagConstraints);
 
-        jPanel1.add(jPanel4, BorderLayout.SOUTH);
+        jPanel1.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
         sofmPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(MouseEvent evt) {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 sofmPanelMousePressed(evt);
             }
         });
 
-        GroupLayout sofmPanelLayout = new GroupLayout(sofmPanel);
+        javax.swing.GroupLayout sofmPanelLayout = new javax.swing.GroupLayout(sofmPanel);
         sofmPanel.setLayout(sofmPanelLayout);
         sofmPanelLayout.setHorizontalGroup(
-            sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 465, Short.MAX_VALUE)
         );
         sofmPanelLayout.setVerticalGroup(
-            sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 409, Short.MAX_VALUE)
         );
 
-        jPanel1.add(sofmPanel, BorderLayout.CENTER);
+        jPanel1.add(sofmPanel, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("SOFM", jPanel1);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
     private void teachModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachModeButtonActionPerformed
         teachMode = teachModeButton.isSelected();
@@ -402,11 +421,11 @@ public class MainApplet2 extends JApplet {
         }
     }//GEN-LAST:event_teachModeButtonActionPerformed
 
-    private void drawPanelMouseClicked(MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseClicked
+    private void drawPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseClicked
 
     }//GEN-LAST:event_drawPanelMouseClicked
 
-    private void drawPanelMousePressed(MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
+    private void drawPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
         if (teachMode) {
             if (evt.getButton() == MouseEvent.BUTTON1) {
                 teachGroup1.add(screen2virtual(evt.getPoint(), drawPanel));
@@ -500,7 +519,7 @@ public class MainApplet2 extends JApplet {
         }
     }
 
-    private void sofmPanelMousePressed(MouseEvent evt) {//GEN-FIRST:event_sofmPanelMousePressed
+    private void sofmPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sofmPanelMousePressed
         try {
             Double point = screen2virtual(evt.getPoint(), sofmPanel);
             SofmPoint sofmPoint = new SofmPoint(point, sofm.operate(new double[]{point.x, point.y}));
@@ -554,7 +573,7 @@ public class MainApplet2 extends JApplet {
      * @param p
      * @return
      */
-    private Double screen2virtual(Point p, JPanel panel) {
+    private Point.Double screen2virtual(Point p, JPanel panel) {
         double x = (double) p.x / (double) panel.getWidth();
         double y = (double) p.y / (double) panel.getHeight();
         return new Double(x, y);
@@ -564,7 +583,7 @@ public class MainApplet2 extends JApplet {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new MainForm2().setVisible(true);
@@ -573,23 +592,23 @@ public class MainApplet2 extends JApplet {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JTextField clusterCountBox;
-    private JTextField cycleCount;
-    private JPanel drawPanel;
-//    private JButton exitButton;
-    private JToggleButton fillAreasButton;
-    private JLabel jLabel1;
-    private JLabel jLabel2;
-    private JPanel jPanel1;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JTabbedPane jTabbedPane1;
-    private JButton resetButton;
-    private JPanel sofmPanel;
-    private JButton sofmResetButton;
-    private JButton teachButton;
-    private JToggleButton teachModeButton;
-    private JButton testButton;
+    private javax.swing.JTextField clusterCountBox;
+    private javax.swing.JTextField cycleCount;
+    private javax.swing.JPanel drawPanel;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JToggleButton fillAreasButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JPanel sofmPanel;
+    private javax.swing.JButton sofmResetButton;
+    private javax.swing.JButton teachButton;
+    private javax.swing.JToggleButton teachModeButton;
+    private javax.swing.JButton testButton;
     // End of variables declaration//GEN-END:variables
 }
