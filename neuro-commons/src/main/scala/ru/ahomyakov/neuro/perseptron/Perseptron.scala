@@ -3,21 +3,21 @@ package ru.ahomyakov.neuro.perseptron
 import ru.ahomyakov.neuro.data.MongoDao
 import scala.Array
 
-class Perseptron(dao: MongoDao, layers: Array[Layer]) {
+class Perseptron(dao: MongoDao, layers: List[Layer]) {
   /**
    * Зачитываем персептрон из хранилища
    */
   def this(dao: MongoDao, id: String) =
     this (dao, dao.findById(id).map(o =>
       new Layer(o, x => AFunctions.sigma(x), x => AFunctions.dSigma(x))
-    ).toArray);
+    ));
 
   /**
    * Инициализация персептрона слоями заданной размерности со случайными весами.
    * Размерность задана как {{вх1, вых1}, {вх2, вых2},...}
    * Контроля размерности нет
    */
-  def this(dao: MongoDao, dimensions: Array[Array[Int]]) = this (dao,
+  def this(dao: MongoDao, dimensions: List[Array[Int]]) = this (dao,
     dimensions.map(dim => new Layer(dim(0), dim(1),
       x => AFunctions.sigma(x), x => AFunctions.dSigma(x))));
 
@@ -40,61 +40,45 @@ class Perseptron(dao: MongoDao, layers: Array[Layer]) {
   def errorBackTrace(input: Array[Double],
                      requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
-    new Perseptron(dao, errorBackTrace(input, requiredOutput, layers.toList).toArray);
+    new Perseptron(dao,
+      mapLayers(layers,
+        errs(input, requiredOutput, layers, teachingCoeff)));
+
+  protected def mapLayers(layers: List[Layer], errs: Seq[Array[Double]]): List[Layer] =
+    layers.head.correctWeights(errs.head) :: mapLayers(layers.tail, errs.tail);
 
   /**
-   * Список выводов слоёв в обратном порядке. В конце вход сети.
+   * <strong>Распространение ошибки по ещё не модифицированной сети.</strong><br/>
+   * Используем системный стек (рекурсия).<br/>
+   * Если мы прошли последний слой и осталось 0 слоёв, то input - это выход
+   * последнего слоя и в данном случае - выход сети. то есть
+   * (input-requiredOutput) и будет ошибка.<br/>
+   * Если ещё есть непройденные слои, считаем хвост списка ошибок далее. Затем
+   * в голову списка ошибок добавляем результат обратного распространения
+   * для текущего слоя. То есть, берём голову полученного списка ошибок,
+   * прогоняем через слой назад и добавляем 1-м элементом.
    */
-  protected def outputs(input: Array[Double]): List[Array[Double]] =
-    layers.foldLeft(List(input))(
-      (results: List[Array[Double]], layer: Layer) =>
-        (layer.apply(results.head) :: results));
+  protected def errs(input: Array[Double],
+                     requiredOutput: Array[Double],
+                     layers: List[Layer],
+                     teachingCoeff: Double): List[Array[Double]] =
+    if (layers.size == 0) List(calculateError(input, requiredOutput, teachingCoeff))
+    else errsAdd(layers.head, layers.head.apply(input),
+      errs(layers.head.apply(input), requiredOutput, layers.tail, teachingCoeff));
+
+  protected def errsAdd(layer: Layer, output: Array[Double],
+                        errs: List[Array[Double]]): List[Array[Double]] =
+    layer.errorBackTrace(errs.head, output).toArray :: errs;
 
   /**
-   * Обратное распространение ошибки. В конце списка ошибка всей сети
+   * Вычисление ошибки для последнего слоя с учётом выхода.
+   * То есть, ошибка между слоем нейронов и связями
    */
-//  protected def errs(err: Array[Double],
-//                     teachingCoeff: Double,
-//                     outputs: List[Array[Double]]): List[Array[Double]] =
-//    layers.foldRight(List(err))((layer, errors) =>
-//      (layer.errorBackTrace(errors.head,) :: errors));
-
-
-  /**
-   * Предварительно считаем все вектора ошибок
-   */
-  //  protected def errs(err: Array[Double],
-  //                     teachingCoeff: Double,
-  //                     layersReversed: List[Layer]): List[Array[Double]] =
-  //    layersReversed match {
-  //      case Nil => Nil;
-  //      case head :: tail => head.errorBackTrace(err) ::
-  //        errs(head.errorBackTrace(err), teachingCoeff, tail);
-  //    };
-
-  protected def err(requiredOutput: Array[Double],
-                    realOutput: Array[Double],
-                    teachingCoeff: Double): Seq[Double] =
-    for (i <- 0 to requiredOutput.length - 1) yield
+  protected def calculateError(requiredOutput: Array[Double],
+                               realOutput: Array[Double],
+                               teachingCoeff: Double): Array[Double] =
+    (for (i <- 0 to requiredOutput.length - 1) yield
       (requiredOutput(i) - realOutput(i)) *
         requiredOutput(i) * (1 - requiredOutput(i)) *
-        teachingCoeff;
-
-  protected def errorBackTrace(input: Array[Double],
-                               requiredOutput: Array[Double],
-                               layers: List[Layer]): List[Layer] =
-    layers match {
-      case Nil => Nil;
-      case head :: Nil => head.correctWeights(err(requiredOutput, head.apply(input), head));
-      case head :: tail => errorBackTrace(head.apply(input), requiredOutput, tail);
-    }
-
-  /**
-   * Прогоняем ошибку через последний слой
-   */
-  protected def err(input: Array[Double],
-                    error: Array[Double],
-                    layer: Layer): Array[Double] {
-
-  }
+        teachingCoeff).toArray;
 }

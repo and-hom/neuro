@@ -50,20 +50,20 @@ class Layer(weights: Array[Array[Double]],
   /**
    * Обратное распространение ошибки
    */
-  def errorBackTrace(err: Seq[Double]): Seq[Double] =
+  def errorBackTrace(err: Seq[Double], output: Array[Double]): Seq[Double] =
     (for (i <- 0 to weights(1).length - 1) yield
       (for (j <- 0 to weights.length - 1) yield
-        dAFuncDx(err(j)) * weights(j)(i)).foldLeft(0D)(_ + _));
+        dAFuncDx(output(i)) * weights(j)(i)).foldLeft(0D)(_ + _));
 
 
   /**
    * Корректировка весов
    */
-  def correctWeights(err: Seq[Double]): Layer = this;
-      new Layer(correctWeightsMatrix(err), aFunc,dAFuncDx);
-//
-//  def correctWeightsMatrix(err: Seq[Double]): Array[Array[Double]] =
-//    for (i <- 0 to requiredOutput.length - 1) yield
-//      (requiredOutput(i) - realOutput(i)) * teachingCoeff
+  def correctWeights(err: Array[Double]): Layer =
+    new Layer(correctWeightsMatrix(err), aFunc, dAFuncDx);
+
+  def correctWeightsMatrix(err: Array[Double]): Array[Array[Double]] = weights;
+//    for (i <- 0 to err.length - 1) yield
+//      0;
 
 }
