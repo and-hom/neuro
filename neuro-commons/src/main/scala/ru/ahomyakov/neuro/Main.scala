@@ -4,7 +4,7 @@ import data.MongoDao
 import perseptron.{AFunctions, Layer, Perseptron}
 import java.util.Arrays
 import ru.mai.neuro.perseptron.impl.{LayerImpl, NeuroNetImpl}
-import ru.mai.neuro.perseptron.impl.functions.{BarierFunction, SigmaFunction}
+import ru.mai.neuro.perseptron.impl.functions.SigmaFunction
 
 
 object Main {
@@ -14,24 +14,24 @@ object Main {
       new MongoDao("127.0.0.1", "neuro", "neuro"),
       List(
         new Layer(2, 3, AFunctions.sigma, AFunctions.dSigma),
-        new Layer(3, 1, AFunctions.step, AFunctions.dStep))
+        new Layer(3, 1, AFunctions.sigma, AFunctions.dSigma))
     );
 
 
     def net = new NeuroNetImpl(Arrays.asList(
       new LayerImpl(2, 3, new SigmaFunction()),
-      new LayerImpl(3, 1, new BarierFunction())
+      new LayerImpl(3, 1, new SigmaFunction())
     ));
 
 
 
-    for (i <- 1 to 1000) {
+    for (i <- 1 to 10000) {
       for (i <- 0 to 3) {
         for (j <- 0 to 3) {
           def in = Array(int2double(i), int2double(j));
           def out = if (i + j < 3 || i + j > 4) Array(1d) else Array(0d);
-          net.teach(in, out, 0.01)
-          perseptron = perseptron.errorBackTrace(in, out, 0.01)
+          net.teach(in, out, 0.3)
+          perseptron = perseptron.errorBackTrace(in, out, 0.3)
         }
       }
     }
