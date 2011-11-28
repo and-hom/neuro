@@ -13,15 +13,6 @@ class Perseptron(dao: MongoDao, layers: List[Layer]) {
     ));
 
   /**
-   * Инициализация персептрона слоями заданной размерности со случайными весами.
-   * Размерность задана как {{вх1, вых1}, {вх2, вых2},...}
-   * Контроля размерности нет
-   */
-  def this(dao: MongoDao, dimensions: List[Array[Int]]) = this (dao,
-    dimensions.map(dim => new Layer(dim(0), dim(1),
-      x => AFunctions.sigma(x), x => AFunctions.dSigma(x))));
-
-  /**
    * f2(f1(input*A_1)*A_2)....
    */
   def process(input: Array[Double]): Array[Double] =
