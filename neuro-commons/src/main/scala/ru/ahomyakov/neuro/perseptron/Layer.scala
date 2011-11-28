@@ -65,6 +65,6 @@ class Layer(weights: Array[Array[Double]],
 
   def correctWeightsMatrix(err: Array[Double]): Array[Array[Double]] = weights;
 
-  override def toString = "Layer\n " + weightMatrix(0).length + " inputs\n" +
+  override def toString = "Layer\n " + weights(0).length + " inputs\n" +
     "weights: " + VectorUtils.printMatrix(weights) + "\n";
 }
