@@ -21,8 +21,8 @@ public class NeuroNetImpl implements NeuroNet {
     }
 
     public void reset() {
-        for(Layer layer : layers)
-        layer.reset();
+        for (Layer layer : layers)
+            layer.reset();
     }
 
     public void addLayer(Layer layer) {
@@ -48,9 +48,9 @@ public class NeuroNetImpl implements NeuroNet {
 
     @Override
     public String toString() {
-        StringBuffer result = new StringBuffer("Neuro network \n"+layers.size()+" layers\n");
-        for(Layer layer : layers)
-            result.append(layer.toString());
+        StringBuilder result = new StringBuilder("Neuro network \n" + layers.size() + " layers\n");
+        for (Layer layer : layers)
+            result = result.append(layer.toString());
         return result.toString();
     }
 }

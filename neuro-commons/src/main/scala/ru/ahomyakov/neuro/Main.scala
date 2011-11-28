@@ -40,19 +40,23 @@ object Main {
     for (i <- 0 to 3) {
       for (j <- 0 to 3) {
         def in = Array(int2double(i), int2double(j));
-        println("i=" + i + "; j=" + j);
-        println(net.operate(in)(0));
-        println(perseptron.process(in)(0))
+        def answer = if (i + j < 3 || i + j > 4) 1d else 0d;
+        val etaOut: Double = net.operate(in)(0)
+        val realOut: Double = perseptron.process(in)(0)
+        if (etaOut != realOut || etaOut != answer) {
+          println("i=" + i + "; j=" + j);
+          println("Answer\t" + answer);
+          println("Java\t" + etaOut);
+          println("Scala\t" + realOut)
+        }
       }
     }
 
-
-
-    println(perseptron.
-      process(Array(1D, 1D)).foldLeft("")(_ + ";" + _));
-
+    println("\nJava:\n" + net.toString);
+    println("\nScala:\n" + perseptron.toString)
     perseptron.store("p1");
   }
+
 }
 
 

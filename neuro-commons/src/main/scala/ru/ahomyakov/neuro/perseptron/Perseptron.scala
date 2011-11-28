@@ -36,7 +36,8 @@ class Perseptron(dao: MongoDao, layers: List[Layer]) {
         errs(input, requiredOutput, layers, teachingCoeff)));
 
   protected def mapLayers(layers: List[Layer], errs: Seq[Array[Double]]): List[Layer] =
-    layers.head.correctWeights(errs.head) :: mapLayers(layers.tail, errs.tail);
+    if (layers.size == 0) List()
+    else layers.head.correctWeights(errs.head) :: mapLayers(layers.tail, errs.tail);
 
   /**
    * <strong>Распространение ошибки по ещё не модифицированной сети.</strong><br/>
@@ -72,4 +73,7 @@ class Perseptron(dao: MongoDao, layers: List[Layer]) {
       (requiredOutput(i) - realOutput(i)) *
         requiredOutput(i) * (1 - requiredOutput(i)) *
         teachingCoeff).toArray;
+
+  override def toString = "Neuro network \n" + layers.size + " layers\n" +
+    (layers.foldLeft(StringBuilder.newBuilder)((s, l) => s.append(l.toString))).toString()
 }

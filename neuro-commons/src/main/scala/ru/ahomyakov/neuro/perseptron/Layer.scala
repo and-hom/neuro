@@ -3,6 +3,7 @@ package ru.ahomyakov.neuro.perseptron
 import com.mongodb.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
 import util.Random
+import ru.mai.neuro.perseptron.utils.VectorUtils
 
 class Layer(weights: Array[Array[Double]],
             aFunc: Double => Double,
@@ -53,7 +54,7 @@ class Layer(weights: Array[Array[Double]],
   def errorBackTrace(err: Seq[Double], output: Array[Double]): Seq[Double] =
     (for (i <- 0 to weights(0).length - 1) yield
       (for (j <- 0 to weights.length - 1) yield
-        dAFuncDx(output(i)) * weights(j)(i)).foldLeft(0D)(_ + _));
+        dAFuncDx(output(j)) * weights(j)(i)).foldLeft(0D)(_ + _));
 
 
   /**
@@ -63,7 +64,7 @@ class Layer(weights: Array[Array[Double]],
     new Layer(correctWeightsMatrix(err), aFunc, dAFuncDx);
 
   def correctWeightsMatrix(err: Array[Double]): Array[Array[Double]] = weights;
-//    for (i <- 0 to err.length - 1) yield
-//      0;
 
+  override def toString = "Layer\n " + weightMatrix(0).length + " inputs\n" +
+    "weights: " + VectorUtils.printMatrix(weights) + "\n";
 }
