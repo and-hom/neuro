@@ -49,6 +49,17 @@ uniquely identify this project -->
                     <groupId>org.scala-tools</groupId>
                     <artifactId>maven-scala-plugin</artifactId>
                     <version>2.9.1</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <scalaVersion>${scala.version}</scalaVersion>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -64,6 +75,31 @@ uniquely identify this project -->
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-old</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-old-framework</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-old-visual</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-old-demo</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-commons</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-compiler</artifactId>
@@ -97,38 +133,10 @@ uniquely identify this project -->
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-query_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-core_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-commons_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-gridfs_${scala.version}</artifactId>
-        </dependency>
-    </dependencies>
-
     <properties>
         <scala.version>2.9.1</scala.version>
         <casbah.version>2.1.5-1</casbah.version>
+        <neuro.version>1.0</neuro.version>
     </properties>
 
 </project>
