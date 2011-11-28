@@ -25,7 +25,7 @@ object Main {
 
 
 
-    for (i <- 1 to 100) {
+    for (i <- 1 to 1000) {
       for (i <- 0 to 3) {
         for (j <- 0 to 3) {
           def in = Array(int2double(i), int2double(j));
