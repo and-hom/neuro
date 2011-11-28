@@ -51,7 +51,7 @@ class Layer(weights: Array[Array[Double]],
    * Обратное распространение ошибки
    */
   def errorBackTrace(err: Seq[Double], output: Array[Double]): Seq[Double] =
-    (for (i <- 0 to weights(1).length - 1) yield
+    (for (i <- 0 to weights(0).length - 1) yield
       (for (j <- 0 to weights.length - 1) yield
         dAFuncDx(output(i)) * weights(j)(i)).foldLeft(0D)(_ + _));
 
