@@ -3,8 +3,8 @@ package ru.ahomyakov.neuro
 import data.MongoDao
 import perseptron.{AFunctions, Layer, Perseptron}
 import java.util.Arrays
-import ru.mai.neuro.perseptron.impl.{LayerImpl, NeuroNetImpl}
-import ru.mai.neuro.perseptron.impl.functions.SigmaFunction
+import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, NeuroNetImpl}
+import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction
 
 
 object Main {

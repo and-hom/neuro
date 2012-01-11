@@ -4,7 +4,7 @@ import ru.ahomyakov.neuro.data.MongoDao
 import scala.Array
 
 class Perseptron(dao: MongoDao, layers: List[Layer])
-  extends ru.ahomyakov.neuro.Perseptron {
+  extends ru.ahomyakov.neuro.base.Perseptron {
   /**
    * Зачитываем персептрон из хранилища
    */
