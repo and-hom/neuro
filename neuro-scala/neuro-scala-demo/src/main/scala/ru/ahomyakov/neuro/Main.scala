@@ -10,20 +10,32 @@ import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction
 object Main {
   def main(args: Array[String]) {
     // инициализация персепторна случайными весами
+    val weights1: Array[Array[Double]] = Array(Array(0.1, -0.2),
+      Array(-0.1, 0.1),
+      Array(0d, 0.1));
+    val weights2: Array[Array[Double]] = Array(Array(0d, 0.1, -0.1));
     var perseptron = new Perseptron(
       new MongoDao("127.0.0.1", "neuro", "neuro"),
       List(
-        new Layer(2, 3, AFunctions.sigma, AFunctions.dSigma),
-        new Layer(3, 1, AFunctions.sigma, AFunctions.dSigma))
+        new Layer(weights1, AFunctions.sigma _, AFunctions.dSigma _),
+        new Layer(weights2, AFunctions.sigma _, AFunctions.dSigma _))
     );
 
 
     def net = new NeuroNetImpl(Arrays.asList(
-      new LayerImpl(2, 3, new SigmaFunction()),
-      new LayerImpl(3, 1, new SigmaFunction())
+      new LayerImpl(Array(Array(0.1, -0.1, 0d), Array(-0.2, 0.1, 0.1)),
+        Array(0d, 0d, 0d), new SigmaFunction()),
+      new LayerImpl(Array(Array(0d), Array(0.1), Array(-0.1)), Array(0d),
+        new SigmaFunction())
     ));
 
 
+
+    println("\nJava:\n" + net.toString);
+    println("\nScala:\n" + perseptron.toString)
+    println("========================================================")
+    println("========================================================")
+    println("========================================================")
 
     for (i <- 1 to 10000) {
       for (i <- 0 to 3) {

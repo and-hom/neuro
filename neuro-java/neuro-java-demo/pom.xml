@@ -22,6 +22,10 @@
         </dependency>
         <dependency>
             <groupId>ru.ahomyakov.neuro</groupId>
+            <artifactId>neuro-scala-framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.ahomyakov.neuro</groupId>
             <artifactId>neuro-java-visual</artifactId>
         </dependency>
     </dependencies>

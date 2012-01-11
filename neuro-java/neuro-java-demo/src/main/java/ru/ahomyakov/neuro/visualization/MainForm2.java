@@ -5,15 +5,11 @@
  */
 package ru.ahomyakov.neuro.visualization;
 
+import ru.ahomyakov.neuro.PerseptronHelper;
+import ru.ahomyakov.neuro.base.Perseptron;
 import ru.ahomyakov.neuro.errors.IllegalInitDataException;
 import ru.ahomyakov.neuro.kurs.ExperimentalResult;
 import ru.ahomyakov.neuro.kurs.SofmPoint;
-import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
-import ru.ahomyakov.neuro.perseptron.impl.NeuroNetImpl;
-import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
-import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
-import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
-import ru.ahomyakov.neuro.perseptron.interfaces.NeuroNet;
 import ru.ahomyakov.neuro.sofm.impl.EuclidVectorSimilarityRate;
 import ru.ahomyakov.neuro.sofm.impl.SOFMImpl;
 import ru.ahomyakov.neuro.sofm.impl.regressor.GeometricEduactionRateRegressor;
@@ -42,7 +38,7 @@ public class MainForm2 extends javax.swing.JFrame {
     private List<Point.Double> teachGroup2 = new LinkedList<Double>();
     private List<SofmPoint> sofmPoints = new LinkedList<SofmPoint>();
     private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
-    private NeuroNet neuroNet;
+    private Perseptron neuroNet;
     private SOFM sofm;
     private double eta = 0.3;
     private boolean fillAreas = false;
@@ -71,7 +67,7 @@ public class MainForm2 extends javax.swing.JFrame {
 
     private void buildSOFM() {
         try {
-            sofm = new SOFMImpl(new GeometricEduactionRateRegressor(0.7),new EuclidVectorSimilarityRate(),0.9);
+            sofm = new SOFMImpl(new GeometricEduactionRateRegressor(0.7), new EuclidVectorSimilarityRate(), 0.9);
             sofm.init(clusterCount, new double[]{0.5, 0.5});
         } catch (IllegalInitDataException ex) {
             Logger.getLogger(MainForm2.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,11 +76,10 @@ public class MainForm2 extends javax.swing.JFrame {
     }
 
     private void buildNeuroNet() {
-        neuroNet = new NeuroNetImpl();
-        Layer layer = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
-        neuroNet.addLayer(layer);
-        layer = new LayerImpl(4, 1, new BarierFunction());
-        neuroNet.addLayer(layer);
+//        Layer layer1 = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
+//        Layer layer2 = new LayerImpl(4, 1, new BarierFunction());
+//        neuroNet = new NeuroNetImpl(Arrays.asList(layer1, layer2));
+        neuroNet = PerseptronHelper.create();
     }
 
     private void drawP(Graphics2D graphics2D) {
@@ -171,9 +166,9 @@ public class MainForm2 extends javax.swing.JFrame {
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         graphics2D.setStroke(new BasicStroke(2));
-        for (int i=0;i<sofm.getClusters().length;i++) {
-            double[] d=sofm.getClusters()[i];
-            graphics2D.setColor(new Color(i*121%255, i*97%255, i*51%255));
+        for (int i = 0; i < sofm.getClusters().length; i++) {
+            double[] d = sofm.getClusters()[i];
+            graphics2D.setColor(new Color(i * 121 % 255, i * 97 % 255, i * 51 % 255));
             Point p = virtual2screen(new Double(d[0], d[1]), sofmPanel);
             graphics2D.drawLine(p.x - 3, p.y - 3, p.x + 3, p.y + 3);
             graphics2D.drawLine(p.x - 3, p.y + 3, p.x + 3, p.y - 3);
@@ -181,7 +176,7 @@ public class MainForm2 extends javax.swing.JFrame {
         graphics2D.setColor(Color.BLACK);
         graphics2D.setStroke(new BasicStroke(4));
         for (SofmPoint point : sofmPoints) {
-            graphics2D.setColor(new Color(point.getClusterNumber()*121%255, point.getClusterNumber()*97%255, point.getClusterNumber()*51%255));
+            graphics2D.setColor(new Color(point.getClusterNumber() * 121 % 255, point.getClusterNumber() * 97 % 255, point.getClusterNumber() * 51 % 255));
             Point p = virtual2screen(point, sofmPanel);
             graphics2D.drawLine(p.x - 1, p.y - 1, p.x + 1, p.y + 1);
             graphics2D.drawLine(p.x - 1, p.y + 1, p.x + 1, p.y - 1);
@@ -227,6 +222,7 @@ public class MainForm2 extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 drawPanelMouseClicked(evt);
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawPanelMousePressed(evt);
             }
@@ -235,12 +231,12 @@ public class MainForm2 extends javax.swing.JFrame {
         javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
-            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+                drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 465, Short.MAX_VALUE)
         );
         drawPanelLayout.setVerticalGroup(
-            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+                drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 386, Short.MAX_VALUE)
         );
 
         jPanel3.add(drawPanel, java.awt.BorderLayout.CENTER);
@@ -381,12 +377,12 @@ public class MainForm2 extends javax.swing.JFrame {
         javax.swing.GroupLayout sofmPanelLayout = new javax.swing.GroupLayout(sofmPanel);
         sofmPanel.setLayout(sofmPanelLayout);
         sofmPanelLayout.setHorizontalGroup(
-            sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+                sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 465, Short.MAX_VALUE)
         );
         sofmPanelLayout.setVerticalGroup(
-            sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+                sofmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 409, Short.MAX_VALUE)
         );
 
         jPanel1.add(sofmPanel, java.awt.BorderLayout.CENTER);
@@ -396,16 +392,17 @@ public class MainForm2 extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     private void teachModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachModeButtonActionPerformed
         teachMode = teachModeButton.isSelected();
         if (teachMode) {
@@ -433,7 +430,7 @@ public class MainForm2 extends javax.swing.JFrame {
     }//GEN-LAST:event_drawPanelMousePressed
 
     private void cycleCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cycleCountActionPerformed
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_cycleCountActionPerformed
 
     private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
@@ -453,7 +450,7 @@ public class MainForm2 extends javax.swing.JFrame {
 
     private void teachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachButtonActionPerformed
         List<ExperimentalResult> results = merge(teachGroup1, teachGroup2);
-        neuroNet.reset();
+        buildNeuroNet();
         int selectedCycleCount = 200000;
         try {
             selectedCycleCount = Integer.valueOf(this.cycleCount.getText());
@@ -479,7 +476,7 @@ public class MainForm2 extends javax.swing.JFrame {
     }//GEN-LAST:event_teachButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        neuroNet.reset();
+        buildNeuroNet();
         testGroup.clear();
         teachGroup1.clear();
         teachGroup2.clear();
