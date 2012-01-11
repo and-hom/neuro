@@ -58,15 +58,21 @@ class Layer(weights: Array[Array[Double]],
 
 
   /**
-   * Корректировка весов
+   * Создание нового слоя с откорректированной матрицей весов
    */
-  def correctWeights(err: Array[Double]): Layer =
-    new Layer(correctWeightsMatrix(err), aFunc, dAFuncDx);
+  def correctWeights(err: Array[Double],
+                     prevOutput: Array[Double],
+                     teachingCoeff: Double): Layer =
+    new Layer(correctWeightsMatrix(err, prevOutput, teachingCoeff), aFunc, dAFuncDx);
 
-  def correctWeightsMatrix(err: Array[Double]): Array[Array[Double]] =
+  /**
+   * Корректировка весов слоя
+   */
+  protected def correctWeightsMatrix(err: Array[Double], prevOutput: Array[Double],
+                           teachingCoeff: Double): Array[Array[Double]] =
     (for (j <- 0 to weights.length - 1) yield
       ((for (i <- 0 to weights(j).length - 1) yield
-        weights(j)(i) + err(j)).toArray)).toArray;
+        weights(j)(i) + err(j) * prevOutput(i) * teachingCoeff).toArray)).toArray;
 
   override def toString = "Layer\n " + weights(0).length +
     " inputs\n" + weights.length + " outputs\n" +

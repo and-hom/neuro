@@ -45,8 +45,8 @@ object Main {
           net = net.errorBackTrace(in, out, 0.3)
           perseptron = perseptron.errorBackTrace(in, out, 0.3)
 
-          println("\nJava:\n" + net.toString);
-          println("\nScala:\n" + perseptron.toString)
+//          println("\nJava:\n" + net.toString);
+//          println("\nScala:\n" + perseptron.toString)
         }
       }
     }

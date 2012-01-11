@@ -33,12 +33,14 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
                      requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
     new Perseptron(dao,
-      mapLayers(layers,
-        errs(input, requiredOutput, layers, teachingCoeff).tail));
+      mapLayers(layers, input,
+        errs(input, requiredOutput, layers).tail, teachingCoeff));
 
-  protected def mapLayers(layers: List[Layer], errs: Seq[Array[Double]]): List[Layer] =
+  protected def mapLayers(layers: List[Layer], input: Array[Double], errs: Seq[Array[Double]],
+                          teachingCoeff: Double): List[Layer] =
     if (layers.size == 0) List()
-    else layers.head.correctWeights(errs.head) :: mapLayers(layers.tail, errs.tail);
+    else layers.head.correctWeights(errs.head, input, teachingCoeff) ::
+      mapLayers(layers.tail, layers.head.apply(input), errs.tail, teachingCoeff);
 
   /**
    * <strong>Распространение ошибки по ещё не модифицированной сети.</strong><br/>
@@ -53,11 +55,10 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
    */
   protected def errs(input: Array[Double],
                      requiredOutput: Array[Double],
-                     layers: List[Layer],
-                     teachingCoeff: Double): List[Array[Double]] =
-    if (layers.size == 0) List(calculateError(input, requiredOutput, teachingCoeff))
+                     layers: List[Layer]): List[Array[Double]] =
+    if (layers.size == 0) List(calculateError(input, requiredOutput))
     else errsAdd(layers.head, layers.head.apply(input),
-      errs(layers.head.apply(input), requiredOutput, layers.tail, teachingCoeff));
+      errs(layers.head.apply(input), requiredOutput, layers.tail));
 
   protected def errsAdd(layer: Layer, output: Array[Double],
                         errs: List[Array[Double]]): List[Array[Double]] =
@@ -68,12 +69,10 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
    * То есть, ошибка между слоем нейронов и связями
    */
   protected def calculateError(requiredOutput: Array[Double],
-                               realOutput: Array[Double],
-                               teachingCoeff: Double): Array[Double] =
+                               realOutput: Array[Double]): Array[Double] =
     (for (i <- 0 to requiredOutput.length - 1) yield
       (requiredOutput(i) - realOutput(i)) *
-        requiredOutput(i) * (1 - requiredOutput(i)) *
-        teachingCoeff).toArray;
+        requiredOutput(i) * (1 - requiredOutput(i))).toArray;
 
   override def toString = "Neuro network \n" + layers.size + " layers\n" +
     (layers.foldLeft(StringBuilder.newBuilder)((s, l) => s.append(l.toString))).toString()
