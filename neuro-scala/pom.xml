@@ -5,9 +5,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ahomyakov.neuro</groupId>
-    <artifactId>neuro-java</artifactId>
+    <artifactId>neuro-scala</artifactId>
     <version>1.0</version>
-    <name>Neuro::java</name>
+    <name>Neuro::scala</name>
     <packaging>pom</packaging>
     <parent>
         <groupId>ru.ahomyakov.neuro</groupId>
@@ -16,9 +16,8 @@
     </parent>
 
     <modules>
-        <module>neuro-java-framework</module>
-        <module>neuro-java-visual</module>
-        <module>neuro-java-demo</module>
+        <module>neuro-scala-framework</module>
+        <module>neuro-scala-demo</module>
     </modules>
 
 </project>

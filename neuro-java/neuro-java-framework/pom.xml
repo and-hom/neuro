@@ -5,20 +5,21 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ahomyakov.neuro</groupId>
-    <artifactId>neuro-java</artifactId>
+    <artifactId>neuro-java-framework</artifactId>
     <version>1.0</version>
-    <name>Neuro::java</name>
-    <packaging>pom</packaging>
+    <name>Neuro::old-framework</name>
+    <packaging>jar</packaging>
     <parent>
         <groupId>ru.ahomyakov.neuro</groupId>
-        <artifactId>neuro</artifactId>
+        <artifactId>neuro-java</artifactId>
         <version>1.0</version>
     </parent>
 
-    <modules>
-        <module>neuro-java-framework</module>
-        <module>neuro-java-visual</module>
-        <module>neuro-java-demo</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>ru.ahomyakov.neuro</groupId>
+            <artifactId>neuro-commons</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

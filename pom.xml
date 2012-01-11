@@ -17,7 +17,8 @@ uniquely identify this project -->
 
     <modules>
         <module>neuro-commons</module>
-        <module>neuro-old</module>
+        <module>neuro-java</module>
+        <module>neuro-scala</module>
     </modules>
 
     <repositories>
@@ -84,27 +85,42 @@ uniquely identify this project -->
         <dependencies>
             <dependency>
                 <groupId>ru.ahomyakov.neuro</groupId>
-                <artifactId>neuro-old</artifactId>
-                <version>${neuro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.ahomyakov.neuro</groupId>
-                <artifactId>neuro-old-framework</artifactId>
-                <version>${neuro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.ahomyakov.neuro</groupId>
-                <artifactId>neuro-old-visual</artifactId>
-                <version>${neuro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.ahomyakov.neuro</groupId>
-                <artifactId>neuro-old-demo</artifactId>
-                <version>${neuro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.ahomyakov.neuro</groupId>
                 <artifactId>neuro-commons</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-java</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-java-framework</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-java-visual</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-java-demo</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-scala</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-scala-demo</artifactId>
+                <version>${neuro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.ahomyakov.neuro</groupId>
+                <artifactId>neuro-scala-framework</artifactId>
                 <version>${neuro.version}</version>
             </dependency>
             <dependency>

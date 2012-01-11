@@ -15,40 +15,40 @@
         <version>1.0</version>
     </parent>
 
-    <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
-    </build>
+    <!--<build>-->
+        <!--<sourceDirectory>src/main/scala</sourceDirectory>-->
+        <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
+    <!--</build>-->
 
-    <dependencies>
-        <dependency>
-            <groupId>ru.ahomyakov.neuro</groupId>
-            <artifactId>neuro-old-framework</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-query_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-core_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-commons_${scala.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-gridfs_${scala.version}</artifactId>
-        </dependency>
-    </dependencies>
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>ru.ahomyakov.neuro</groupId>-->
+            <!--<artifactId>neuro-java-framework</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.scala-lang</groupId>-->
+            <!--<artifactId>scala-compiler</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.scala-lang</groupId>-->
+            <!--<artifactId>scala-library</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.mongodb.casbah</groupId>-->
+            <!--<artifactId>casbah-query_${scala.version}</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.mongodb.casbah</groupId>-->
+            <!--<artifactId>casbah-core_${scala.version}</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.mongodb.casbah</groupId>-->
+            <!--<artifactId>casbah-commons_${scala.version}</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.mongodb.casbah</groupId>-->
+            <!--<artifactId>casbah-gridfs_${scala.version}</artifactId>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
 
 </project>
