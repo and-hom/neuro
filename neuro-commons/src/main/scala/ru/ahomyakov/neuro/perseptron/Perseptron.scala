@@ -33,7 +33,7 @@ class Perseptron(dao: MongoDao, layers: List[Layer]) {
                      teachingCoeff: Double): Perseptron =
     new Perseptron(dao,
       mapLayers(layers,
-        errs(input, requiredOutput, layers, teachingCoeff)));
+        errs(input, requiredOutput, layers, teachingCoeff).tail));
 
   protected def mapLayers(layers: List[Layer], errs: Seq[Array[Double]]): List[Layer] =
     if (layers.size == 0) List()

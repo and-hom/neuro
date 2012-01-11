@@ -64,9 +64,9 @@ class Layer(weights: Array[Array[Double]],
     new Layer(correctWeightsMatrix(err), aFunc, dAFuncDx);
 
   def correctWeightsMatrix(err: Array[Double]): Array[Array[Double]] =
-    weights.map(linksFrom =>
-      (for (i <- 0 to linksFrom.length - 1) yield
-        linksFrom(i) + err(i)).toArray);
+    (for (j <- 0 to weights.length - 1) yield
+      ((for (i <- 0 to weights(j).length - 1) yield
+        weights(j)(i) + err(j)).toArray)).toArray;
 
   override def toString = "Layer\n " + weights(0).length +
     " inputs\n" + weights.length + " outputs\n" +
