@@ -1,62 +1,60 @@
 package ru.mai.k806.commons;
 
-import java.util.List;
-
 /**
  */
-public class ГетероассоциативнаяСеть_алг  implements Classificator{
+public classпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ_пїЅпїЅпїЅ  implements Classificator{
 
 
-    public ГетероассоциативнаяСеть_алг(List<Sample> samples) {
-        if (samples.size() == 0) {
-            W = new double[0][0];
-            return;
-        } else
-            W = new double[samples.get(0).getInputLength()][samples.get(0).getOutputLength()];
-        for (Sample sample : samples) {
-            for (int i = 0; i < W.length; i++)
-                for (int j = 0; j < W[0].length; j++)
-                    W[i][j] += sample.getInput()[i] * sample.getOutput()[j];
+publicпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ_пїЅпїЅпїЅ(List<Sample>samples){
+        if(samples.size()==0){
+        W=new double[0][0];
+return;
+}else
+        W=new double[samples.get(0).getInputLength()][samples.get(0).getOutputLength()];
+for(Sample sample:samples){
+        for(int i=0;i<W.length;i++)
+        for(int j=0;j<W[0].length;j++)
+        W[i][j]+=sample.getInput()[i]*sample.getOutput()[j];
+}
         }
-    }
 
-    public double whatIsIt(double[] input) {
-        double[] inp = input;
-        double[] oldOutput, output = null;
-        while (true) {
-            // Прямое распространение
-            oldOutput = output;
-            output = new double[W[0].length];
-            for (int i = 0; i < W.length; i++)
-                for (int j = 0; j < output.length; j++)
-                    output[j] += inp[i] * W[i][j];
-            // Применение пороговой функции активности
-            for (int j = 0; j < output.length; j++)
-                if (output[j] < 0)
-                    output[j] = -1;
-                else if (output[j] > 0)
-                    output[j] = 1;
-            // Обратное распространение
-            inp = new double[input.length];
-            for (int i = 0; i < W.length; i++)
-                for (int j = 0; j < output.length; j++)
-                    inp[i]=W[i][j]*output[j];
-            // Проверка стабильности
-            if(oldOutput!=null){
-                boolean systemIsStable = true;
-                for(int j=0;j<output.length;j++)
-                    if(output[j]!=oldOutput[j])
-                        systemIsStable=false;
-                if(systemIsStable)
-                    break;
-            }
+public double whatIsIt(double[]input){
+        double[]inp=input;
+double[]oldOutput,output=null;
+while(true){
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        oldOutput=output;
+output=new double[W[0].length];
+for(int i=0;i<W.length;i++)
+        for(int j=0;j<output.length;j++)
+        output[j]+=inp[i]*W[i][j];
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+for(int j=0;j<output.length;j++)
+        if(output[j]<0)
+        output[j]=-1;
+else if(output[j]>0)
+        output[j]=1;
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+inp=new double[input.length];
+for(int i=0;i<W.length;i++)
+        for(int j=0;j<output.length;j++)
+        inp[i]=W[i][j]*output[j];
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+if(oldOutput!=null){
+        boolean systemIsStable=true;
+for(int j=0;j<output.length;j++)
+        if(output[j]!=oldOutput[j])
+        systemIsStable=false;
+if(systemIsStable)
+        break;
+}
         }
         for(int j=0;j<output.length;j++)
-            if(output[j]==1)
-                return j;
-        return -1;
-    }
+        if(output[j]==1)
+        return j;
+return-1;
+}
 
 
-    protected double[][] W;
+protected double[][]W;
 }

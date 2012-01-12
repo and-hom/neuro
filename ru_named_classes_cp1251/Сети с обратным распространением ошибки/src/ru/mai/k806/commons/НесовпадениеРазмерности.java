@@ -3,20 +3,20 @@ package ru.mai.k806.commons;
 /**
  *
  */
-public class НесовпадениеРазмерности extends Exception {
+public classпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ extends Exception{
 
-	public НесовпадениеРазмерности() {
-	}
+publicпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(){
+        }
 
-	public НесовпадениеРазмерности(String message) {
-		super(message);
-	}
-
-	public НесовпадениеРазмерности(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public НесовпадениеРазмерности(Throwable cause) {
-		super(cause);
-	}
+publicпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(String message){
+        super(message);
 }
+
+publicпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(String message,Throwable cause){
+        super(message,cause);
+}
+
+publicпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(Throwable cause){
+        super(cause);
+}
+        }

@@ -8,10 +8,12 @@ public class Sample {
         this.input = input;
         this.output = output;
     }
-    public int getInputLength(){
+
+    public int getInputLength() {
         return input.length;
     }
-    public int getOutputLength(){
+
+    public int getOutputLength() {
         return output.length;
     }
 

@@ -69,7 +69,7 @@ class Layer(weights: Array[Array[Double]],
    * Корректировка весов слоя
    */
   protected def correctWeightsMatrix(err: Array[Double], prevOutput: Array[Double],
-                           teachingCoeff: Double): Array[Array[Double]] =
+                                     teachingCoeff: Double): Array[Array[Double]] =
     (for (j <- 0 to weights.length - 1) yield
       ((for (i <- 0 to weights(j).length - 1) yield
         weights(j)(i) + err(j) * prevOutput(i) * teachingCoeff).toArray)).toArray;

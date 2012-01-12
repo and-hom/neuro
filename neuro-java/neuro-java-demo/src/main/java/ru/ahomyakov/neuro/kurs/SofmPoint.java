@@ -7,7 +7,6 @@ package ru.ahomyakov.neuro.kurs;
 import java.awt.geom.Point2D;
 
 /**
- *
  * @author and_hom
  */
 public class SofmPoint extends Point2D.Double {
@@ -18,6 +17,7 @@ public class SofmPoint extends Point2D.Double {
         super(x, y);
         this.clusterNumber = clusterNumber;
     }
+
     public SofmPoint(Point2D.Double point, int clusterNumber) {
         super(point.x, point.y);
         this.clusterNumber = clusterNumber;

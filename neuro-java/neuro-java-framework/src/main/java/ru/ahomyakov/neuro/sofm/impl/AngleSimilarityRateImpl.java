@@ -45,13 +45,13 @@ public class AngleSimilarityRateImpl implements VectorSimilarityRate {
     private double angleCenterIsNot0(double[] vector1, double[] vector2) {
         double scalarProduct = 0;
         for (int i = 0; i < vector1.length; i++)
-            scalarProduct += (vector1[i]-startPoint[i]) * (vector2[i]-startPoint[i]);
+            scalarProduct += (vector1[i] - startPoint[i]) * (vector2[i] - startPoint[i]);
         double rate1 = 0;
-        for (int i=0;i< vector1.length;i++)
-            rate1 += (vector1[i]-startPoint[i])*(vector1[i]-startPoint[i]);
+        for (int i = 0; i < vector1.length; i++)
+            rate1 += (vector1[i] - startPoint[i]) * (vector1[i] - startPoint[i]);
         double rate2 = 0;
-        for (int i=0;i< vector2.length;i++)
-            rate2 += (vector2[i]-startPoint[i])*(vector2[i]-startPoint[i]);
+        for (int i = 0; i < vector2.length; i++)
+            rate2 += (vector2[i] - startPoint[i]) * (vector2[i] - startPoint[i]);
         double r = Math.sqrt(rate1 * rate2);
         return Math.acos(scalarProduct / r);
     }

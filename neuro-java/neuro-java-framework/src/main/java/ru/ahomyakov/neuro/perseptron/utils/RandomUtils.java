@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandomUtils {
     protected static Random random = new Random();
 
-    public static double[] randomVector(int dim) {
+    public synchronized static double[] randomVector(int dim) {
         double[] result = new double[dim];
         random.setSeed(System.currentTimeMillis());
         for (int i = 0; i < dim; i++)
@@ -13,7 +13,7 @@ public class RandomUtils {
         return result;
     }
 
-    public static double[][] randomMatrix(int xDim, int yDim) {
+    public synchronized static double[][] randomMatrix(int xDim, int yDim) {
         double[][] result = new double[xDim][yDim];
         random.setSeed(System.currentTimeMillis());
         for (int i = 0; i < xDim; i++)

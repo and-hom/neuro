@@ -1,4 +1,6 @@
-package ru.mai.k806.Examples.Буквы_0;
+package ru.mai.k806.Examples.
+
+пїЅпїЅпїЅпїЅпїЅ_0;
 
 import javax.swing.*;
 import java.awt.event.MouseListener;
@@ -36,7 +38,7 @@ public class LetterInput extends JPanel {
         }
 
         public void mouseReleased(MouseEvent e) {
-             if(imageEditable==false)
+            if (imageEditable == false)
                 return;
             int x = e.getX();
             int y = e.getY();
@@ -66,7 +68,7 @@ public class LetterInput extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.black);
-        g.drawRect(0,0,this.getWidth()-1,this.getHeight()-1);
+        g.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
 //        g.setColor(Color.red);
 //        g.fillRect(0,0,this.getWidth(),this.getHeight());
         if (imageEditable)
@@ -119,11 +121,11 @@ public class LetterInput extends JPanel {
         this.content = content;
     }
 
-    public double[] getLinearizedContent(){
-        double[] result = new double[getLetterHeight()*getLetterWidth()];
-        for(int i=0;i<getLetterHeight();i++)
-            for(int j=0;j<getLetterWidth();j++)
-                result[i*getLetterWidth()+j]=content[i][j];
+    public double[] getLinearizedContent() {
+        double[] result = new double[getLetterHeight() * getLetterWidth()];
+        for (int i = 0; i < getLetterHeight(); i++)
+            for (int j = 0; j < getLetterWidth(); j++)
+                result[i * getLetterWidth() + j] = content[i][j];
         return result;
     }
 

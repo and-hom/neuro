@@ -12,7 +12,7 @@ public class NeuroNetImpl implements NeuroNet {
     List<Layer> layers;
 
     public NeuroNetImpl() {
-        layers = new ArrayList<Layer>(5);
+        layers = new ArrayList<>(5);
     }
 
     public NeuroNetImpl(List<Layer> layers) {

@@ -30,8 +30,8 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
    * обратный ход при помощи системного стека
    */
   def teach(input: Array[Double],
-                     requiredOutput: Array[Double],
-                     teachingCoeff: Double): Perseptron =
+            requiredOutput: Array[Double],
+            teachingCoeff: Double): Perseptron =
     new Perseptron(dao,
       mapLayers(layers, input,
         errs(input, requiredOutput, layers).tail, teachingCoeff));

@@ -1,6 +1,6 @@
 package ru.ahomyakov.neuro.errors;
 
-public class NetIsNotInitalizedExceprion extends Exception{
+public class NetIsNotInitalizedExceprion extends Exception {
     public NetIsNotInitalizedExceprion() {
     }
 

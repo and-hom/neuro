@@ -9,12 +9,11 @@ public interface Layer {
     double[] operate(double[] in);
 
     /**
-     *
      * @param error ошибка
-     * @param eta норма обучения
+     * @param eta   норма обучения
      * @return ошибка след слоя
      */
-    double[] teach(double[] error,double eta);
+    double[] teach(double[] error, double eta);
 
     void reset();
 }

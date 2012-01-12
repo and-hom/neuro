@@ -22,17 +22,17 @@ public interface SOFM {
      * @param paramCount    количество признаков, по которым происходит кластеризация
      */
     void init(int clusterNumber, int paramCount) throws IllegalInitDataException;
-    
-    
+
+
     /**
      * Инициализация сети (сброс всех предыдущих настроек)
      *
      * @param clusterNumber количество кластеров, целое положительное число
-     * @param center    точка, вблизи которой помещаются центроиды кластеров в начальный момент
+     * @param center        точка, вблизи которой помещаются центроиды кластеров в начальный момент
      */
     void init(int clusterNumber, double[] center) throws IllegalInitDataException;
 
-    
+
     /**
      * Возвращает количество кластеров в сети
      *

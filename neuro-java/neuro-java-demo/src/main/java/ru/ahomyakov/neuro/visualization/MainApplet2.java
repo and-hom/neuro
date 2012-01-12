@@ -169,9 +169,9 @@ public class MainApplet2 extends JApplet {
             graphics2D.drawLine(from.x, from.y, to.x, to.y);
         }
         graphics2D.setStroke(new BasicStroke(2));
-        for (int i=0;i<sofm.getClusters().length;i++) {
-            double[] d=sofm.getClusters()[i];
-            graphics2D.setColor(new Color(i*100%255, i*57%255, i*11%255));
+        for (int i = 0; i < sofm.getClusters().length; i++) {
+            double[] d = sofm.getClusters()[i];
+            graphics2D.setColor(new Color(i * 100 % 255, i * 57 % 255, i * 11 % 255));
             Point p = virtual2screen(new Double(d[0], d[1]), sofmPanel);
             graphics2D.drawLine(p.x - 3, p.y - 3, p.x + 3, p.y + 3);
             graphics2D.drawLine(p.x - 3, p.y + 3, p.x + 3, p.y - 3);
@@ -179,7 +179,7 @@ public class MainApplet2 extends JApplet {
         graphics2D.setColor(Color.BLACK);
         graphics2D.setStroke(new BasicStroke(4));
         for (SofmPoint point : sofmPoints) {
-            graphics2D.setColor(new Color(point.getClusterNumber()*100%255, point.getClusterNumber()*57%255, point.getClusterNumber()*11%255));
+            graphics2D.setColor(new Color(point.getClusterNumber() * 100 % 255, point.getClusterNumber() * 57 % 255, point.getClusterNumber() * 11 % 255));
             Point p = virtual2screen(point, sofmPanel);
             graphics2D.drawLine(p.x - 1, p.y - 1, p.x + 1, p.y + 1);
             graphics2D.drawLine(p.x - 1, p.y + 1, p.x + 1, p.y - 1);
@@ -221,6 +221,7 @@ public class MainApplet2 extends JApplet {
             public void mouseClicked(MouseEvent evt) {
                 drawPanelMouseClicked(evt);
             }
+
             public void mousePressed(MouseEvent evt) {
                 drawPanelMousePressed(evt);
             }
@@ -229,12 +230,12 @@ public class MainApplet2 extends JApplet {
         GroupLayout drawPanelLayout = new GroupLayout(drawPanel);
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
-            drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+                drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 465, Short.MAX_VALUE)
         );
         drawPanelLayout.setVerticalGroup(
-            drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+                drawPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 386, Short.MAX_VALUE)
         );
 
         jPanel3.add(drawPanel, BorderLayout.CENTER);
@@ -369,12 +370,12 @@ public class MainApplet2 extends JApplet {
         GroupLayout sofmPanelLayout = new GroupLayout(sofmPanel);
         sofmPanel.setLayout(sofmPanelLayout);
         sofmPanelLayout.setHorizontalGroup(
-            sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+                sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 465, Short.MAX_VALUE)
         );
         sofmPanelLayout.setVerticalGroup(
-            sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
+                sofmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 409, Short.MAX_VALUE)
         );
 
         jPanel1.add(sofmPanel, BorderLayout.CENTER);
@@ -384,14 +385,15 @@ public class MainApplet2 extends JApplet {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jTabbedPane1, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jTabbedPane1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
     private void teachModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachModeButtonActionPerformed
         teachMode = teachModeButton.isSelected();
         if (teachMode) {
@@ -419,7 +421,7 @@ public class MainApplet2 extends JApplet {
     }//GEN-LAST:event_drawPanelMousePressed
 
     private void cycleCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cycleCountActionPerformed
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_cycleCountActionPerformed
 
     private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
@@ -575,7 +577,7 @@ public class MainApplet2 extends JApplet {
     private JTextField clusterCountBox;
     private JTextField cycleCount;
     private JPanel drawPanel;
-//    private JButton exitButton;
+    //    private JButton exitButton;
     private JToggleButton fillAreasButton;
     private JLabel jLabel1;
     private JLabel jLabel2;

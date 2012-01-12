@@ -1,7 +1,5 @@
 package ru.mai.k806.Examples.Letters;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -16,9 +14,9 @@ public class LetterInput extends JPanel {
     public LetterInput(int letterWidth, int letterHeight) {
         super();
         content = new int[letterHeight][letterWidth];
-        for(int i=0;i<getLetterHeight();i++)
-            for(int j=0;j<getLetterWidth();j++)
-                content[i][j]=-1;
+        for (int i = 0; i < getLetterHeight(); i++)
+            for (int j = 0; j < getLetterWidth(); j++)
+                content[i][j] = -1;
         this.addMouseListener(mouseListener);
     }
 
@@ -39,7 +37,7 @@ public class LetterInput extends JPanel {
         }
 
         public void mouseReleased(MouseEvent e) {
-             if(imageEditable==false)
+            if (imageEditable == false)
                 return;
             int x = e.getX();
             int y = e.getY();
@@ -69,7 +67,7 @@ public class LetterInput extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.black);
-        g.drawRect(0,0,this.getWidth()-1,this.getHeight()-1);
+        g.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
 //        g.setColor(Color.red);
 //        g.fillRect(0,0,this.getWidth(),this.getHeight());
         if (imageEditable)
@@ -123,11 +121,11 @@ public class LetterInput extends JPanel {
         this.content = content;
     }
 
-    public double[] getLinearizedContent(){
-        double[] result = new double[getLetterHeight()*getLetterWidth()];
-        for(int i=0;i<getLetterHeight();i++)
-            for(int j=0;j<getLetterWidth();j++)
-                result[i*getLetterWidth()+j]=content[i][j];
+    public double[] getLinearizedContent() {
+        double[] result = new double[getLetterHeight() * getLetterWidth()];
+        for (int i = 0; i < getLetterHeight(); i++)
+            for (int j = 0; j < getLetterWidth(); j++)
+                result[i * getLetterWidth() + j] = content[i][j];
         return result;
     }
 

@@ -12,7 +12,7 @@ public class EuclidVectorSimilarityRate implements VectorSimilarityRate {
             throw new IllegalDimensionException("Length of vector1 is not equals length of vector2");
         double rate = 0;
         for (int i = 0; i < vector1.length; i++)
-            rate += (vector1[i] - vector2[i])* (vector1[i] - vector2[i]);
+            rate += (vector1[i] - vector2[i]) * (vector1[i] - vector2[i]);
         return Math.sqrt(rate);
     }
 }

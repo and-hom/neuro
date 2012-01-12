@@ -1,6 +1,6 @@
 package ru.ahomyakov.neuro.errors;
 
-public class IllegalInitDataException extends Exception{
+public class IllegalInitDataException extends Exception {
     public IllegalInitDataException() {
     }
 

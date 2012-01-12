@@ -5,7 +5,6 @@
 package ru.ahomyakov.neuro.visualization.components;
 
 /**
- *
  * @author and_hom
  */
 public interface VisualizationListener {

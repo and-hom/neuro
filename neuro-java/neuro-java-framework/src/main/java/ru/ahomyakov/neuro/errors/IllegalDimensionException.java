@@ -1,6 +1,6 @@
 package ru.ahomyakov.neuro.errors;
 
-public class IllegalDimensionException extends Exception{
+public class IllegalDimensionException extends Exception {
     public IllegalDimensionException() {
     }
 

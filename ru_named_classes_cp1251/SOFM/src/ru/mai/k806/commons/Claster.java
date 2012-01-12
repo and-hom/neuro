@@ -10,8 +10,8 @@ public class Claster {
     public Claster(int dimension) {
         centroid = new double[dimension];
         Random random = new Random();
-        for(int i=0;i<dimension;i++)
-            centroid[i]=random.nextDouble();
+        for (int i = 0; i < dimension; i++)
+            centroid[i] = random.nextDouble();
     }
 
     public Claster(double[] centroid) {

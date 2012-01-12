@@ -1,21 +1,24 @@
 package ru.mai.k806.Letters;
 
 import ru.mai.k806.Examples.Letters.LetterInput;
-import ru.mai.k806.commons.Sample;
-import ru.mai.k806.commons.ГетероассоциативнаяСеть_0;
+import ru.mai.k806.commons.*;
 import ru.mai.k806.commons.SOFM;
+import ru.mai.k806.commons.Sample;
 
 import javax.swing.*;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
+
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ_0;
 
 /**
- *
- * @author  Andrew
+ * @author Andrew
  */
 public class MainForm extends javax.swing.JFrame {
 
-    /** Creates new form MainForm */
+    /**
+     * Creates new form MainForm
+     */
     public MainForm() {
         initComponents();
         letterInputA1.setImageEditable(false);
@@ -27,113 +30,113 @@ public class MainForm extends javax.swing.JFrame {
         letterInputA3.setImageEditable(false);
         letterInputB3.setImageEditable(false);
         letterInputC3.setImageEditable(false);
-        
+
         letterUserInput.setImageEditable(true);
-        
+
         jPanel1.add(letterInputA1);
         jPanel1.add(letterInputB1);
         jPanel1.add(letterInputC1);
-        
+
         jPanel2.add(letterInputA2);
         jPanel2.add(letterInputB2);
         jPanel2.add(letterInputC2);
-        
+
         jPanel4.add(letterInputA3);
         jPanel4.add(letterInputB3);
         jPanel4.add(letterInputC3);
 
         jPanel3.add(letterUserInput);
-        letterUserInput.setBounds(0,0,jPanel3.getWidth(),jPanel3.getHeight());
+        letterUserInput.setBounds(0, 0, jPanel3.getWidth(), jPanel3.getHeight());
         //jPanel3.getGraphics().fillRect(0,0,10,10);
     }
 
     //0
     private LetterInput letterInputA1 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 1, 1, 1}
     });
     //1
     private LetterInput letterInputB1 = new LetterInput(new int[][]{
-            {0,0,1,0},
-            {0,1,1,0},
-            {1,1,1,0},
-            {0,0,1,0},
-            {0,0,1,0},
-            {0,1,1,1}
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {1, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 1, 1, 1}
     });
     //2
     private LetterInput letterInputC1 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {0,0,0,1},
-            {0,0,1,0},
-            {0,1,0,0},
-            {1,0,0,0},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {0, 0, 0, 1},
+            {0, 0, 1, 0},
+            {0, 1, 0, 0},
+            {1, 0, 0, 0},
+            {1, 1, 1, 1}
     });
-        //0
+    //0
     private LetterInput letterInputA2 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 1, 1, 1}
     });
     //1
     private LetterInput letterInputB2 = new LetterInput(new int[][]{
-            {0,0,1,0},
-            {0,1,1,0},
-            {1,1,1,0},
-            {0,0,1,0},
-            {0,0,1,0},
-            {0,1,1,1}
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {1, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 1, 1, 1}
     });
     //2
     private LetterInput letterInputC2 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {0,0,0,1},
-            {0,0,1,0},
-            {0,1,0,0},
-            {1,0,0,0},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {0, 0, 0, 1},
+            {0, 0, 1, 0},
+            {0, 1, 0, 0},
+            {1, 0, 0, 0},
+            {1, 1, 1, 1}
     });
-        //0
+    //0
     private LetterInput letterInputA3 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,0,0,1},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 0, 0, 1},
+            {1, 1, 1, 1}
     });
     //1
     private LetterInput letterInputB3 = new LetterInput(new int[][]{
-            {0,0,1,0},
-            {0,1,1,0},
-            {1,1,1,0},
-            {0,0,1,0},
-            {0,0,1,0},
-            {0,1,1,1}
+            {0, 0, 1, 0},
+            {0, 1, 1, 0},
+            {1, 1, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 1, 1, 1}
     });
     //2
     private LetterInput letterInputC3 = new LetterInput(new int[][]{
-            {1,1,1,1},
-            {0,0,0,1},
-            {0,0,1,0},
-            {0,1,0,0},
-            {1,0,0,0},
-            {1,1,1,1}
+            {1, 1, 1, 1},
+            {0, 0, 0, 1},
+            {0, 0, 1, 0},
+            {0, 1, 0, 0},
+            {1, 0, 0, 0},
+            {1, 1, 1, 1}
     });
-    
-    
-    
-    private LetterInput letterUserInput = new LetterInput(4,6);
 
-    /** This method is called from within the constructor to
+
+    private LetterInput letterUserInput = new LetterInput(4, 6);
+
+    /**
+     * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
@@ -222,41 +225,41 @@ public class MainForm extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-                            .addComponent(loadButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(6, 6, 6)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                                        .addComponent(loadButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                                        .addComponent(jCheckBox1)
+                                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1)
-                        .addGap(14, 14, 14)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loadButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveButton))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jCheckBox1)
+                                                .addGap(14, 14, 14)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(loadButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(saveButton))
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -272,12 +275,12 @@ public class MainForm extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         letterInputA1.setImageEditable(jCheckBox1.isSelected());
         letterInputB1.setImageEditable(jCheckBox1.isSelected());
-        letterInputC1.setImageEditable(jCheckBox1.isSelected());  
-        
+        letterInputC1.setImageEditable(jCheckBox1.isSelected());
+
         letterInputA2.setImageEditable(jCheckBox1.isSelected());
         letterInputB2.setImageEditable(jCheckBox1.isSelected());
-        letterInputC2.setImageEditable(jCheckBox1.isSelected());  
-        
+        letterInputC2.setImageEditable(jCheckBox1.isSelected());
+
         letterInputA3.setImageEditable(jCheckBox1.isSelected());
         letterInputB3.setImageEditable(jCheckBox1.isSelected());
         letterInputC3.setImageEditable(jCheckBox1.isSelected());
@@ -285,22 +288,22 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         List<Sample> samples = new LinkedList<Sample>();
-        samples.add(new Sample(letterInputA1.getLinearizedContent(),new double[]{1,0,0}));
-        samples.add(new Sample(letterInputB1.getLinearizedContent(),new double[]{0,1,0}));
-        samples.add(new Sample(letterInputC1.getLinearizedContent(),new double[]{0,0,1}));
-        
-        samples.add(new Sample(letterInputA2.getLinearizedContent(),new double[]{1,0,0}));
-        samples.add(new Sample(letterInputB2.getLinearizedContent(),new double[]{0,1,0}));
-        samples.add(new Sample(letterInputC2.getLinearizedContent(),new double[]{0,0,1}));
-        
-        samples.add(new Sample(letterInputA3.getLinearizedContent(),new double[]{1,0,0}));
-        samples.add(new Sample(letterInputB3.getLinearizedContent(),new double[]{0,1,0}));
-        samples.add(new Sample(letterInputC3.getLinearizedContent(),new double[]{0,0,1}));
-        int index = (int)new SOFM(samples,3).whatIsIt(letterUserInput.getLinearizedContent());
-        if(index<0)
-        JOptionPane.showMessageDialog(this,"Даже не знаю, что вы имеете ввиду..");
+        samples.add(new Sample(letterInputA1.getLinearizedContent(), new double[]{1, 0, 0}));
+        samples.add(new Sample(letterInputB1.getLinearizedContent(), new double[]{0, 1, 0}));
+        samples.add(new Sample(letterInputC1.getLinearizedContent(), new double[]{0, 0, 1}));
+
+        samples.add(new Sample(letterInputA2.getLinearizedContent(), new double[]{1, 0, 0}));
+        samples.add(new Sample(letterInputB2.getLinearizedContent(), new double[]{0, 1, 0}));
+        samples.add(new Sample(letterInputC2.getLinearizedContent(), new double[]{0, 0, 1}));
+
+        samples.add(new Sample(letterInputA3.getLinearizedContent(), new double[]{1, 0, 0}));
+        samples.add(new Sample(letterInputB3.getLinearizedContent(), new double[]{0, 1, 0}));
+        samples.add(new Sample(letterInputC3.getLinearizedContent(), new double[]{0, 0, 1}));
+        int index = (int) new SOFM(samples, 3).whatIsIt(letterUserInput.getLinearizedContent());
+        if (index < 0)
+            JOptionPane.showMessageDialog(this, "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ..");
         else
-        JOptionPane.showMessageDialog(this,"Ваш образец похож на образец N" + (index+1));
+            JOptionPane.showMessageDialog(this, "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ N" + (index + 1));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

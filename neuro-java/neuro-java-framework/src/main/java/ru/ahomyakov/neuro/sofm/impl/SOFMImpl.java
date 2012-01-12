@@ -27,7 +27,7 @@ public class SOFMImpl implements SOFM {
         this.vectorSimilarityRate = new EuclidVectorSimilarityRate();
     }
 
-    public SOFMImpl(EducationRateRegressor regressor, VectorSimilarityRate vectorSimilarityRate,double educationRate) throws IllegalInitDataException {
+    public SOFMImpl(EducationRateRegressor regressor, VectorSimilarityRate vectorSimilarityRate, double educationRate) throws IllegalInitDataException {
         this.regressor = regressor;
         this.vectorSimilarityRate = vectorSimilarityRate;
         setEducationRate(educationRate);

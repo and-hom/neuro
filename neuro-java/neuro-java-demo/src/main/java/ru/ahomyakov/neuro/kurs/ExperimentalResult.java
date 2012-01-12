@@ -4,11 +4,11 @@ import java.awt.geom.Point2D;
 
 /**
  * Created by IntelliJ IDEA.
-* User: and_hom
-* Date: 17.01.2008
-* Time: 18:19:32
-* To change this template use File | Settings | File Templates.
-*/
+ * User: and_hom
+ * Date: 17.01.2008
+ * Time: 18:19:32
+ * To change this template use File | Settings | File Templates.
+ */
 public class ExperimentalResult {
 
     private Point2D.Double point;
