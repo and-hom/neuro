@@ -16,13 +16,17 @@ class Matrix(rows: Array[Array[Double]],
       (for (j <- 0 to cols - 1) yield
         Random.nextDouble() % 1D).toArray).toArray);
 
+  def this(serialized: String) = this (serialized.split("::").
+    map(col => col.split(":").
+    map(element => java.lang.Double.parseDouble(element))));
+
   def serialize(): String = rows.foldLeft("")((str1, row) =>
     (str1 + (if (str1.isEmpty) "" else "::") + row.foldLeft("")
       ((str2, cell) => (str2 + (if (str2.isEmpty) "" else ":") + cell))));
 
-  def map[T](f: (Double => T)): T = rows.map(f);
+  def map[T](f: (Array[Double] => T)): T = rows.map(f);
 
-  def mapT[T](f: (Double => T)): T = cols.map(f);
+  def mapT[T](f: (Array[Double] => T)): T = cols.map(f);
 
   def get(i: Int, j: Int) = rows(i)(j);
 
