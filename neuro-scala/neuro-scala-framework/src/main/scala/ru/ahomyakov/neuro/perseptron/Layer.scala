@@ -101,6 +101,8 @@ class Layer(weights: Array[Array[Double]],
       ((for (i <- 0 to weights(j).length - 1) yield
         weights(j)(i) + err(j) * prevOutput(i) * teachingCoeff).toArray)).toArray;
 
+  def reset(): Layer = new Layer(weights.length, weights(0).length, aFunc, dAFuncDx);
+
   /**
    * Строковое представление для отладки
    */

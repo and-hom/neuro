@@ -4,7 +4,7 @@ import data.MongoDao
 import perseptron.impl.functions.{BarierFunction, SigmaFunction}
 import perseptron.{AFunctions, Layer, Perseptron}
 import java.util.Arrays
-import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, NeuroNetImpl}
+import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, PerseptronImpl}
 
 
 object Main {
@@ -15,14 +15,13 @@ object Main {
       Array(0d, 0.1));
     val weights2: Array[Array[Double]] = Array(Array(0d, 0.1, -0.1));
     var scalaPerseptron = new Perseptron(
-      new MongoDao("127.0.0.1", "neuro", "neuro"),
       List(
         new Layer(weights1, Array(0d, 0d, 0d), AFunctions.sigma _, AFunctions.dSigma _),
         new Layer(weights2, Array(0d), AFunctions.step _, AFunctions.dStep _))
     );
 
 
-    var javaPerseptron = new NeuroNetImpl(Arrays.asList(
+    var javaPerseptron = new PerseptronImpl(Arrays.asList(
       new LayerImpl(Array(Array(0.1, -0.1, 0d), Array(-0.2, 0.1, 0.1)),
         Array(0d, 0d, 0d), new SigmaFunction()),
       new LayerImpl(Array(Array(0d), Array(0.1), Array(-0.1)), Array(0d),
@@ -45,8 +44,8 @@ object Main {
           javaPerseptron = javaPerseptron.teach(in, out, 0.3)
           scalaPerseptron = scalaPerseptron.teach(in, out, 0.3)
 
-//          println("\nJava:\n" + javaPerseptron.toString);
-//          println("\nScala:\n" + scalaPerseptron.toString)
+          //          println("\nJava:\n" + javaPerseptron.toString);
+          //          println("\nScala:\n" + scalaPerseptron.toString)
         }
       }
     }
@@ -69,7 +68,7 @@ object Main {
 
     println("\nJava:\n" + javaPerseptron.toString);
     println("\nScala:\n" + scalaPerseptron.toString)
-    scalaPerseptron.store("p1");
+    scalaPerseptron.store("p1", new MongoDao("127.0.0.1", "neuro", "neuro"));
   }
 
 }

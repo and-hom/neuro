@@ -6,11 +6,11 @@
 package ru.ahomyakov.neuro.kurs;
 
 import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
-import ru.ahomyakov.neuro.perseptron.impl.NeuroNetImpl;
+import ru.ahomyakov.neuro.perseptron.impl.PerseptronImpl;
 import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
 import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
-import ru.ahomyakov.neuro.perseptron.interfaces.NeuroNet;
+import ru.ahomyakov.neuro.perseptron.interfaces.Perseptron;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class MainApplet extends JApplet {
     private List<Double> teachGroup1 = new LinkedList<>();
     private List<Double> teachGroup2 = new LinkedList<>();
     private List<ExperimentalResult> testGroup = new LinkedList<>();
-    private NeuroNet neuroNet;
+    private Perseptron perseptron;
     private double eta = 0.3;
     private boolean fillAreas = false;
 
@@ -49,11 +49,11 @@ public class MainApplet extends JApplet {
     }
 
     private void buildNeuroNet() {
-        neuroNet = new NeuroNetImpl();
+        perseptron = new PerseptronImpl();
         Layer layer = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
-        neuroNet.addLayer(layer);
+        perseptron.addLayer(layer);
         layer = new LayerImpl(4, 1, new BarierFunction());
-        neuroNet.addLayer(layer);
+        perseptron.addLayer(layer);
     }
 
     /**
@@ -247,7 +247,7 @@ public class MainApplet extends JApplet {
 //            experimentalResult.setFromFirstCollection(null)
             input[0] = experimentalResult.getPoint().x;
             input[1] = experimentalResult.getPoint().y;
-            if (neuroNet.process(input)[0] >= 0.5) {
+            if (perseptron.process(input)[0] >= 0.5) {
                 experimentalResult.setFromFirstCollection(true);
             } else {
                 experimentalResult.setFromFirstCollection(false);
@@ -258,7 +258,7 @@ public class MainApplet extends JApplet {
 
     private void teachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachButtonActionPerformed
         List<ExperimentalResult> results = merge(teachGroup1, teachGroup2);
-        neuroNet.reset();
+        perseptron.reset();
         int selectedCycleCount = 20000;
         try {
             selectedCycleCount = Integer.valueOf(this.cycleCount.getText());
@@ -274,9 +274,9 @@ public class MainApplet extends JApplet {
                 input[0] = point.getPoint().x;
                 input[1] = point.getPoint().y;
                 if (point.isFromFirstCollection()) {
-                    neuroNet.teach(input, success, eta);
+                    perseptron.teach(input, success, eta);
                 } else {
-                    neuroNet.teach(input, fail, eta);
+                    perseptron.teach(input, fail, eta);
                 }
             }
         }
@@ -368,7 +368,7 @@ public class MainApplet extends JApplet {
                     Double point = screen2virtual(pnt);
                     src[0] = point.x;
                     src[1] = point.y;
-                    if (neuroNet.process(src)[0] >= 0.5) {
+                    if (perseptron.process(src)[0] >= 0.5) {
                         graphics2D.setColor(Color.BLUE);
                     } else {
                         graphics2D.setColor(Color.RED);

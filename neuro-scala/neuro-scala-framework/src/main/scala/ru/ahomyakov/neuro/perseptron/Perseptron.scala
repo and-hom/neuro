@@ -1,27 +1,32 @@
 package ru.ahomyakov.neuro.perseptron
 
-import ru.ahomyakov.neuro.data.MongoDao
 import scala.Array
+import ru.ahomyakov.neuro.data.Dao
 
-class Perseptron(dao: MongoDao, layers: List[Layer])
+class Perseptron(layers: List[Layer])
   extends ru.ahomyakov.neuro.base.NeuroNet {
   /**
    * Зачитываем персептрон из хранилища
    */
-  def this(dao: MongoDao, id: String) =
-    this (dao, dao.findById(id).map(o =>
+  def this(dao: Dao, id: String) =
+    this (dao.findById(id).map(o =>
       new Layer(o, x => AFunctions.sigma(x), x => AFunctions.dSigma(x))
     ));
+
+  override def reset() = new Perseptron(
+    layers.map(layer => layer.reset()));
 
   /**
    * f2(f1(input*A_1)*A_2)....
    */
-  def process(input: Array[Double]): Array[Double] =
+  override def process(input: Array[Double]): Array[Double] =
     layers.foldLeft(input)(
       (vect: Array[Double], layer: Layer) => layer.apply(vect));
 
-
-  def store(id: String) {
+  /**
+   * Сохранить персептрон в базу
+   */
+  def store(id: String, dao: Dao) {
     dao.store(layers.map(l => l.toDatabaseObject).toList);
   };
 
@@ -29,13 +34,12 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
    * Обратное распространение ошибки, Прямой и
    * обратный ход при помощи системного стека
    */
-  def teach(input: Array[Double],
-            requiredOutput: Array[Double],
-            teachingCoeff: Double): Perseptron =
-    new Perseptron(dao,
-      mapLayers(layers, input,
-        errs(input, requiredOutput, layers),
-        teachingCoeff));
+  override def teach(input: Array[Double],
+                     requiredOutput: Array[Double],
+                     teachingCoeff: Double): Perseptron =
+    new Perseptron(mapLayers(layers, input,
+      errs(input, requiredOutput, layers),
+      teachingCoeff));
 
   protected def mapLayers(layers: List[Layer], input: Array[Double], errs: Seq[Array[Double]],
                           teachingCoeff: Double): List[Layer] =

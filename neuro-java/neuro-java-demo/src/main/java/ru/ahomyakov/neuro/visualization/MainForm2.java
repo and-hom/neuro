@@ -11,7 +11,7 @@ import ru.ahomyakov.neuro.errors.IllegalInitDataException;
 import ru.ahomyakov.neuro.kurs.ExperimentalResult;
 import ru.ahomyakov.neuro.kurs.SofmPoint;
 import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
-import ru.ahomyakov.neuro.perseptron.impl.NeuroNetImpl;
+import ru.ahomyakov.neuro.perseptron.impl.PerseptronImpl;
 import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
 import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
@@ -85,7 +85,7 @@ public class MainForm2 extends javax.swing.JFrame {
     private void buildNeuroNet() {
         Layer layer1 = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
         Layer layer2 = new LayerImpl(4, 1, new BarierFunction());
-        neuroNet1 = new NeuroNetImpl(Arrays.asList(layer1, layer2));
+        neuroNet1 = new PerseptronImpl(Arrays.asList(layer1, layer2));
         neuroNet2 = PerseptronHelper.create();
     }
 

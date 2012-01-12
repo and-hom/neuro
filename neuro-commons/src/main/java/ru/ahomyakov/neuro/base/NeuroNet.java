@@ -12,4 +12,6 @@ public interface NeuroNet {
     NeuroNet teach(double[] in, double[] out, double eta);
 
     double[] process(double[] in);
+
+    NeuroNet reset();
 }

@@ -2,33 +2,34 @@ package ru.ahomyakov.neuro.perseptron.impl;
 
 import ru.ahomyakov.neuro.VectorUtils;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
-import ru.ahomyakov.neuro.perseptron.interfaces.NeuroNet;
+import ru.ahomyakov.neuro.perseptron.interfaces.Perseptron;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class NeuroNetImpl implements NeuroNet {
+public class PerseptronImpl implements Perseptron {
     List<Layer> layers;
 
-    public NeuroNetImpl() {
+    public PerseptronImpl() {
         layers = new ArrayList<>(5);
     }
 
-    public NeuroNetImpl(List<Layer> layers) {
+    public PerseptronImpl(List<Layer> layers) {
         this.layers = layers;
     }
 
-    public void reset() {
+    public PerseptronImpl reset() {
         for (Layer layer : layers)
             layer.reset();
+        return this;
     }
 
     public void addLayer(Layer layer) {
         layers.add(layer);
     }
 
-    public NeuroNetImpl teach(double[] in, double[] out, double eta) {
+    public PerseptronImpl teach(double[] in, double[] out, double eta) {
         double[] result = process(in);
         double[] error = VectorUtils.minus(out, result);
         ListIterator<Layer> iter = layers.listIterator(layers.size());
