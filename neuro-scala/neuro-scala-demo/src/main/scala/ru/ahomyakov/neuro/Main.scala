@@ -14,15 +14,15 @@ object Main {
       Array(-0.1, 0.1),
       Array(0d, 0.1));
     val weights2: Array[Array[Double]] = Array(Array(0d, 0.1, -0.1));
-    var perseptron = new Perseptron(
+    var scalaPerseptron = new Perseptron(
       new MongoDao("127.0.0.1", "neuro", "neuro"),
       List(
-        new Layer(weights1, AFunctions.sigma _, AFunctions.dSigma _),
-        new Layer(weights2, AFunctions.sigma _, AFunctions.dSigma _))
+        new Layer(weights1, Array(0d, 0d, 0d), AFunctions.sigma _, AFunctions.dSigma _),
+        new Layer(weights2, Array(0d), AFunctions.sigma _, AFunctions.dSigma _))
     );
 
 
-    var net = new NeuroNetImpl(Arrays.asList(
+    var javaPerseptron = new NeuroNetImpl(Arrays.asList(
       new LayerImpl(Array(Array(0.1, -0.1, 0d), Array(-0.2, 0.1, 0.1)),
         Array(0d, 0d, 0d), new SigmaFunction()),
       new LayerImpl(Array(Array(0d), Array(0.1), Array(-0.1)), Array(0d),
@@ -31,8 +31,8 @@ object Main {
 
 
 
-    println("\nJava:\n" + net.toString);
-    println("\nScala:\n" + perseptron.toString)
+    println("\nJava:\n" + javaPerseptron.toString);
+    println("\nScala:\n" + scalaPerseptron.toString)
     println("========================================================")
     println("========================================================")
     println("========================================================")
@@ -42,11 +42,11 @@ object Main {
         for (j <- 0 to 3) {
           def in = Array(int2double(i), int2double(j));
           def out = if (i + j < 3 || i + j > 4) Array(1d) else Array(0d);
-          net = net.teach(in, out, 0.3)
-          perseptron = perseptron.teach(in, out, 0.3)
+          javaPerseptron = javaPerseptron.teach(in, out, 0.3)
+          scalaPerseptron = scalaPerseptron.teach(in, out, 0.3)
 
-          println("\nJava:\n" + net.toString);
-          println("\nScala:\n" + perseptron.toString)
+//          println("\nJava:\n" + javaPerseptron.toString);
+//          println("\nScala:\n" + scalaPerseptron.toString)
         }
       }
     }
@@ -56,8 +56,8 @@ object Main {
       for (j <- 0 to 3) {
         def in = Array(int2double(i), int2double(j));
         def answer = if (i + j < 3 || i + j > 4) 1d else 0d;
-        val etaOut: Double = net.process(in)(0)
-        val realOut: Double = perseptron.process(in)(0)
+        val etaOut: Double = javaPerseptron.process(in)(0)
+        val realOut: Double = scalaPerseptron.process(in)(0)
         if (etaOut != realOut || etaOut != answer) {
           println("i=" + i + "; j=" + j);
           println("Answer\t" + answer);
@@ -67,9 +67,9 @@ object Main {
       }
     }
 
-    println("\nJava:\n" + net.toString);
-    println("\nScala:\n" + perseptron.toString)
-    perseptron.store("p1");
+    println("\nJava:\n" + javaPerseptron.toString);
+    println("\nScala:\n" + scalaPerseptron.toString)
+    scalaPerseptron.store("p1");
   }
 
 }

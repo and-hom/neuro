@@ -34,7 +34,8 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
             teachingCoeff: Double): Perseptron =
     new Perseptron(dao,
       mapLayers(layers, input,
-        errs(input, requiredOutput, layers).tail, teachingCoeff));
+        errs(input, requiredOutput, layers),
+        teachingCoeff));
 
   protected def mapLayers(layers: List[Layer], input: Array[Double], errs: Seq[Array[Double]],
                           teachingCoeff: Double): List[Layer] =
@@ -56,23 +57,34 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
   protected def errs(input: Array[Double],
                      requiredOutput: Array[Double],
                      layers: List[Layer]): List[Array[Double]] =
-    if (layers.size == 0) List(calculateError(input, requiredOutput))
-    else errsAdd(layers.head, layers.head.apply(input),
+    if (layers.size == 1) List(calculateErrorLast(input, requiredOutput, layers.head))
+    else errsAdd(layers.head, layers.tail.head, input,
       errs(layers.head.apply(input), requiredOutput, layers.tail));
 
-  protected def errsAdd(layer: Layer, output: Array[Double],
+  protected def errsAdd(layer: Layer, nextLayer: Layer, input: Array[Double],
                         errs: List[Array[Double]]): List[Array[Double]] =
-    layer.errorBackTrace(errs.head, output).toArray :: errs;
+    calculateErrorInternal(input, nextLayer.errorBackTrace(errs.head), layer).toArray :: errs;
 
   /**
-   * Вычисление ошибки для последнего слоя с учётом выхода.
-   * То есть, ошибка между слоем нейронов и связями
+   * Вычисление ошибки для последнего слоя
    */
-  protected def calculateError(requiredOutput: Array[Double],
-                               realOutput: Array[Double]): Array[Double] =
-    (for (i <- 0 to requiredOutput.length - 1) yield
-      (realOutput(i) - requiredOutput(i)) *
-        requiredOutput(i) * (1 - requiredOutput(i))).toArray;
+  protected def calculateErrorLast(input: Array[Double],
+                                   requiredOutput: Array[Double],
+                                   layer: Layer): Array[Double] =
+    calculateErrorLast1(layer.applyWeightsAndShift(input), requiredOutput, layer);
+
+  protected def calculateErrorLast1(weightedInput: Array[Double],
+                                    requiredOutput: Array[Double],
+                                    layer: Layer): Array[Double] =
+    Math.multiplyV(Math.substituteV(requiredOutput, layer.applyFunction(weightedInput)),
+      layer.dF(weightedInput));
+
+
+  protected def calculateErrorInternal(input: Array[Double],
+                                       err: Array[Double],
+                                       layer: Layer): Array[Double] =
+    Math.multiplyV(err, layer.dF(layer.applyWeightsAndShift(input)));
+
 
   override def toString = "Neuro network \n" + layers.size + " layers\n" +
     (layers.foldLeft(StringBuilder.newBuilder)((s, l) => s.append(l.toString))).toString()
