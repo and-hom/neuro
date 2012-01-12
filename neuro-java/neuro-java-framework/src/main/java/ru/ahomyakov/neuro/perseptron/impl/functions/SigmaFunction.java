@@ -9,6 +9,8 @@ public class SigmaFunction implements VectorFunction {
     protected double barrier;
 
     public SigmaFunction() {
+        yMax = 1;
+        xCompression = 1;
     }
 
     public SigmaFunction(double xCompression, double y0, double yMax, double barrier) {
@@ -55,5 +57,10 @@ public class SigmaFunction implements VectorFunction {
 
     public void setYMax(double yMax) {
         this.yMax = yMax;
+    }
+
+    @Override
+    public String toString() {
+        return y0 + "+" + yMax + "/(1+exp(-" + xCompression + "x))";
     }
 }
