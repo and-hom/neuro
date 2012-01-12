@@ -5,10 +5,10 @@
  */
 package ru.ahomyakov.neuro.kurs;
 
+import ru.ahomyakov.neuro.base.BarierFunction;
+import ru.ahomyakov.neuro.base.SigmaFunction;
 import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
 import ru.ahomyakov.neuro.perseptron.impl.PerseptronImpl;
-import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
-import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
 import ru.ahomyakov.neuro.perseptron.interfaces.Perseptron;
 

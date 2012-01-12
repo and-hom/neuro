@@ -1,8 +1,8 @@
 package ru.ahomyakov.neuro.perseptron.impl;
 
 import ru.ahomyakov.neuro.VectorUtils;
+import ru.ahomyakov.neuro.base.VectorFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
-import ru.ahomyakov.neuro.perseptron.interfaces.VectorFunction;
 import ru.ahomyakov.neuro.perseptron.utils.RandomUtils;
 
 public class LayerImpl implements Layer {

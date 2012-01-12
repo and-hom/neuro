@@ -1,6 +1,4 @@
-package ru.ahomyakov.neuro.perseptron.impl.functions;
-
-import ru.ahomyakov.neuro.perseptron.interfaces.VectorFunction;
+package ru.ahomyakov.neuro.base;
 
 /**
  * Тождественная ф-ция активности

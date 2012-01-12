@@ -1,5 +1,6 @@
 package ru.ahomyakov.neuro
 
+import base.{BarierFunction, SigmaFunction}
 import data.MongoDao
 import perseptron.impl.functions.{BarierFunction, SigmaFunction}
 import perseptron.{AFunctions, Layer, Perseptron}

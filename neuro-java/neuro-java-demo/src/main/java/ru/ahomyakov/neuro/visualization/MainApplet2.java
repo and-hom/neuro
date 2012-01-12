@@ -5,13 +5,13 @@
  */
 package ru.ahomyakov.neuro.visualization;
 
+import ru.ahomyakov.neuro.base.BarierFunction;
+import ru.ahomyakov.neuro.base.SigmaFunction;
 import ru.ahomyakov.neuro.errors.IllegalInitDataException;
 import ru.ahomyakov.neuro.kurs.ExperimentalResult;
 import ru.ahomyakov.neuro.kurs.SofmPoint;
 import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
 import ru.ahomyakov.neuro.perseptron.impl.PerseptronImpl;
-import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
-import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
 import ru.ahomyakov.neuro.perseptron.interfaces.Perseptron;
 import ru.ahomyakov.neuro.sofm.impl.SOFMImpl;

@@ -1,8 +1,8 @@
 package ru.ahomyakov.neuro.test;
 
+import ru.ahomyakov.neuro.base.BarierFunction;
 import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
 import ru.ahomyakov.neuro.perseptron.impl.PerseptronImpl;
-import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
 import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
 import ru.ahomyakov.neuro.perseptron.interfaces.Perseptron;
 

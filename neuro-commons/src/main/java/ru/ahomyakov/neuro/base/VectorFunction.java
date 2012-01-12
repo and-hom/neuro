@@ -1,4 +1,4 @@
-package ru.ahomyakov.neuro.perseptron.interfaces;
+package ru.ahomyakov.neuro.base;
 
 /**
  *

@@ -1,5 +1,7 @@
 package ru.ahomyakov.neuro.perseptron.interfaces;
 
+import ru.ahomyakov.neuro.base.VectorFunction;
+
 /**
  * Слой (матрица весов + слой нейронов)
  */

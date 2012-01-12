@@ -4,36 +4,35 @@ import com.mongodb.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
 import util.Random
 import ru.ahomyakov.neuro.VectorUtils
+import ru.ahomyakov.neuro.base.VectorFunction
 
 class Layer(weights: Array[Array[Double]],
             shift: Array[Double],
-            aFunc: Double => Double,
-            dAFuncDx: Double => Double) {
+            aFunc: VectorFunction) {
   /**
    * Инициализация слоя из сохранённого в б/д json-объекта
    */
-  def this(o: DBObject, aFunc: Double => Double, dAFuncDx: Double => Double) =
+  def this(o: DBObject, aFunc: VectorFunction) =
     this (o.get("matrix").toString.split("::").
       map(col => col.split(":").
       map(element => java.lang.Double.parseDouble(element))),
       o.get("shift").toString.split(":").
         map(element => java.lang.Double.parseDouble(element)),
-      aFunc, dAFuncDx);
+      aFunc);
 
   /**
    * Инициализация слоя указанной размерности случайными весами
    */
   def this(inputs: Int,
            outputs: Int,
-           aFunc: Double => Double,
-           dAFuncDx: Double => Double) =
+           aFunc: VectorFunction) =
     this (
       (for (i <- 0 to outputs - 1) yield
         (for (j <- 0 to inputs - 1) yield
           Random.nextDouble() % 1D).toArray).toArray,
       (for (j <- 0 to outputs - 1) yield
         Random.nextDouble() % 1D).toArray,
-      aFunc, dAFuncDx);
+      aFunc);
 
   /**
    * Объект для сохранения в mongo
@@ -61,20 +60,21 @@ class Layer(weights: Array[Array[Double]],
   /**
    * Применить ф-цию активности
    */
-  def applyFunction(input: Array[Double]): Array[Double] =
-    input.map(x => aFunc(x));
+  def applyFunction(input: Array[Double]): Array[Double] = aFunc.f(input);
 
 
   /**
-   * Обратное распространение ошибки
+   * Обратное распространение ошибки через матрицу весов
    */
   def errorBackTrace(err: Array[Double]): Array[Double] =
     (for (i <- 0 to weights(0).length - 1) yield
       (for (j <- 0 to weights.length - 1) yield
         err(j) * weights(j)(i)).foldLeft(0D)(_ + _)).toArray;
 
-  def dF(inp: Array[Double]): Array[Double] =
-    inp.map(x => dAFuncDx(x));
+  /**
+   * Производная от ф-ции активности
+   */
+  def dF(input: Array[Double]): Array[Double] = aFunc.df(input);
 
 
   /**
@@ -86,7 +86,7 @@ class Layer(weights: Array[Array[Double]],
     new Layer(
       correctWeightsMatrix(err, prevOutput, teachingCoeff),
       correctShift(err, teachingCoeff),
-      aFunc, dAFuncDx);
+      aFunc);
 
   /**
    * Корректировка вектора смещения
@@ -103,7 +103,7 @@ class Layer(weights: Array[Array[Double]],
       ((for (i <- 0 to weights(j).length - 1) yield
         weights(j)(i) + err(j) * prevOutput(i) * teachingCoeff).toArray)).toArray;
 
-  def reset(): Layer = new Layer(weights.length, weights(0).length, aFunc, dAFuncDx);
+  def reset(): Layer = new Layer(weights.length, weights(0).length, aFunc);
 
   /**
    * Строковое представление для отладки

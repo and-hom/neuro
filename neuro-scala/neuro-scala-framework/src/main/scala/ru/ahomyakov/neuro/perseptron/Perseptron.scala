@@ -2,6 +2,7 @@ package ru.ahomyakov.neuro.perseptron
 
 import scala.Array
 import ru.ahomyakov.neuro.data.Dao
+import ru.ahomyakov.neuro.base.SigmaFunction
 
 class Perseptron(layers: List[Layer])
   extends ru.ahomyakov.neuro.base.NeuroNet {
@@ -9,9 +10,7 @@ class Perseptron(layers: List[Layer])
    * Зачитываем персептрон из хранилища
    */
   def this(dao: Dao, id: String) =
-    this (dao.findById(id).map(o =>
-      new Layer(o, x => AFunctions.sigma(x), x => AFunctions.dSigma(x))
-    ).toList);
+    this (dao.findById(id).map(o => new Layer(o, new SigmaFunction())).toList);
 
   override def reset() = new Perseptron(
     layers.map(layer => layer.reset()));
