@@ -7,7 +7,7 @@
     <groupId>ru.ahomyakov.neuro</groupId>
     <artifactId>neuro-java-framework</artifactId>
     <version>1.0</version>
-    <name>Neuro::old-framework</name>
+    <name>Neuro::java-framework</name>
     <packaging>jar</packaging>
     <parent>
         <groupId>ru.ahomyakov.neuro</groupId>

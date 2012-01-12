@@ -45,8 +45,8 @@ object Main {
           net = net.teach(in, out, 0.3)
           perseptron = perseptron.teach(in, out, 0.3)
 
-//          println("\nJava:\n" + net.toString);
-//          println("\nScala:\n" + perseptron.toString)
+          println("\nJava:\n" + net.toString);
+          println("\nScala:\n" + perseptron.toString)
         }
       }
     }

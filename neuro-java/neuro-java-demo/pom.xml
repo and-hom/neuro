@@ -7,7 +7,7 @@
     <groupId>ru.ahomyakov.neuro</groupId>
     <artifactId>neuro-java-demo</artifactId>
     <version>1.0</version>
-    <name>Neuro::old-demo</name>
+    <name>Neuro::java-demo</name>
     <packaging>jar</packaging>
     <parent>
         <groupId>ru.ahomyakov.neuro</groupId>

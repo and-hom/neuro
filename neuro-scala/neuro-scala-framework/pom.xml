@@ -7,7 +7,7 @@
     <groupId>ru.ahomyakov.neuro</groupId>
     <artifactId>neuro-scala-framework</artifactId>
     <version>1.0</version>
-    <name>Neuro::commons</name>
+    <name>Neuro::scala-framework</name>
     <packaging>jar</packaging>
     <parent>
         <groupId>ru.ahomyakov.neuro</groupId>
