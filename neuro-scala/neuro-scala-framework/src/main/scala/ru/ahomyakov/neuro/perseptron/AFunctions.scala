@@ -8,5 +8,5 @@ object AFunctions {
 
   def step(x: Double): Double = if (x > 0) 1 else 0;
 
-  def dStep(x: Double): Double = if (x == 0) 1 else 0;
+  def dStep(x: Double): Double = dSigma(x);
 }

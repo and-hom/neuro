@@ -1,10 +1,10 @@
 package ru.ahomyakov.neuro
 
 import data.MongoDao
+import perseptron.impl.functions.{BarierFunction, SigmaFunction}
 import perseptron.{AFunctions, Layer, Perseptron}
 import java.util.Arrays
 import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, NeuroNetImpl}
-import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction
 
 
 object Main {
@@ -18,7 +18,7 @@ object Main {
       new MongoDao("127.0.0.1", "neuro", "neuro"),
       List(
         new Layer(weights1, Array(0d, 0d, 0d), AFunctions.sigma _, AFunctions.dSigma _),
-        new Layer(weights2, Array(0d), AFunctions.sigma _, AFunctions.dSigma _))
+        new Layer(weights2, Array(0d), AFunctions.step _, AFunctions.dStep _))
     );
 
 
@@ -26,7 +26,7 @@ object Main {
       new LayerImpl(Array(Array(0.1, -0.1, 0d), Array(-0.2, 0.1, 0.1)),
         Array(0d, 0d, 0d), new SigmaFunction()),
       new LayerImpl(Array(Array(0d), Array(0.1), Array(-0.1)), Array(0d),
-        new SigmaFunction())
+        new BarierFunction())
     ));
 
 

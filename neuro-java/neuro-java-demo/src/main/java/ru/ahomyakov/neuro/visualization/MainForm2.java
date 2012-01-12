@@ -10,6 +10,11 @@ import ru.ahomyakov.neuro.base.NeuroNet;
 import ru.ahomyakov.neuro.errors.IllegalInitDataException;
 import ru.ahomyakov.neuro.kurs.ExperimentalResult;
 import ru.ahomyakov.neuro.kurs.SofmPoint;
+import ru.ahomyakov.neuro.perseptron.impl.LayerImpl;
+import ru.ahomyakov.neuro.perseptron.impl.NeuroNetImpl;
+import ru.ahomyakov.neuro.perseptron.impl.functions.BarierFunction;
+import ru.ahomyakov.neuro.perseptron.impl.functions.SigmaFunction;
+import ru.ahomyakov.neuro.perseptron.interfaces.Layer;
 import ru.ahomyakov.neuro.sofm.impl.EuclidVectorSimilarityRate;
 import ru.ahomyakov.neuro.sofm.impl.SOFMImpl;
 import ru.ahomyakov.neuro.sofm.impl.regressor.GeometricEduactionRateRegressor;
@@ -22,6 +27,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +44,8 @@ public class MainForm2 extends javax.swing.JFrame {
     private List<Point.Double> teachGroup2 = new LinkedList<>();
     private List<SofmPoint> sofmPoints = new LinkedList<>();
     private List<ExperimentalResult> testGroup = new LinkedList<>();
-    private NeuroNet neuroNet;
+    private NeuroNet neuroNet1;
+    private NeuroNet neuroNet2;
     private SOFM sofm;
     private double eta = 0.3;
     private boolean fillAreas = false;
@@ -76,10 +83,10 @@ public class MainForm2 extends javax.swing.JFrame {
     }
 
     private void buildNeuroNet() {
-//        Layer layer1 = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
-//        Layer layer2 = new LayerImpl(4, 1, new BarierFunction());
-//        neuroNet = new NeuroNetImpl(Arrays.asList(layer1, layer2));
-        neuroNet = PerseptronHelper.create();
+        Layer layer1 = new LayerImpl(2, 4, new SigmaFunction(1, 0, 1, 1));
+        Layer layer2 = new LayerImpl(4, 1, new BarierFunction());
+        neuroNet1 = new NeuroNetImpl(Arrays.asList(layer1, layer2));
+        neuroNet2 = PerseptronHelper.create();
     }
 
     private void drawP(Graphics2D graphics2D) {
@@ -137,13 +144,19 @@ public class MainForm2 extends javax.swing.JFrame {
                     Double point = screen2virtual(pnt, drawPanel);
                     src[0] = point.x;
                     src[1] = point.y;
-                    if (neuroNet.process(src)[0] >= 0.5) {
+                    double n1 = neuroNet1.process(src)[0];
+                    double n2 = neuroNet2.process(src)[0];
+                    if (n1 >= 0.5 && n2 > 0.5) {
                         graphics2D.setColor(Color.BLUE);
-                        graphics2D.drawLine(x - 1, y - 1, x + 1, y + 1);
-                        graphics2D.drawLine(x - 1, y + 1, x + 1, y - 1);
+                    } else if (n1 >= 0.5) {
+                        graphics2D.setColor(Color.GREEN);
+                    } else if (n2 >= 0.5) {
+                        graphics2D.setColor(Color.YELLOW);
                     } else {
                         graphics2D.setColor(Color.RED);
                     }
+                    graphics2D.drawLine(x - 1, y - 1, x + 1, y + 1);
+                    graphics2D.drawLine(x - 1, y + 1, x + 1, y - 1);
                 }
             }
         }
@@ -439,7 +452,7 @@ public class MainForm2 extends javax.swing.JFrame {
 //            experimentalResult.setFromFirstCollection(null)
             input[0] = experimentalResult.getPoint().x;
             input[1] = experimentalResult.getPoint().y;
-            if (neuroNet.process(input)[0] >= 0.5) {
+            if (neuroNet1.process(input)[0] >= 0.5) {
                 experimentalResult.setFromFirstCollection(true);
             } else {
                 experimentalResult.setFromFirstCollection(false);
@@ -449,7 +462,7 @@ public class MainForm2 extends javax.swing.JFrame {
     }//GEN-LAST:event_testButtonActionPerformed
 
     private void teachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachButtonActionPerformed
-        List<ExperimentalResult> results = merge(teachGroup1, teachGroup2);
+        List<ExperimentalResult> points = merge(teachGroup1, teachGroup2);
         buildNeuroNet();
         int selectedCycleCount = 200000;
         try {
@@ -462,13 +475,15 @@ public class MainForm2 extends javax.swing.JFrame {
         double[] fail = new double[]{0d};
         double[] input = new double[2];
         for (int i = 0; i < selectedCycleCount; i++) {
-            for (ExperimentalResult point : results) {
+            for (ExperimentalResult point : points) {
                 input[0] = point.getPoint().x;
                 input[1] = point.getPoint().y;
                 if (point.isFromFirstCollection()) {
-                    neuroNet.teach(input, success, eta);
+                    neuroNet1.teach(input, success, eta);
+                    neuroNet2.teach(input, success, eta);
                 } else {
-                    neuroNet.teach(input, fail, eta);
+                    neuroNet1.teach(input, fail, eta);
+                    neuroNet2.teach(input, fail, eta);
                 }
             }
         }

@@ -136,9 +136,6 @@ public class VisulizationPanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         drawGrid(g);
-        if (listener == null) {
-            return;
-        }
     }
 
     public void repaint(VisualizationListener listener) {
