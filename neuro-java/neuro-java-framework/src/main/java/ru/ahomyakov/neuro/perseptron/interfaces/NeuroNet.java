@@ -1,11 +1,9 @@
 package ru.ahomyakov.neuro.perseptron.interfaces;
 
-import ru.ahomyakov.neuro.base.Perseptron;
-
 /**
  * Нейросеть
  */
-public interface NeuroNet extends Perseptron {
+public interface NeuroNet extends ru.ahomyakov.neuro.base.NeuroNet {
     
     public void reset();
 
@@ -19,5 +17,5 @@ public interface NeuroNet extends Perseptron {
      * @return возврат результата для унификации с ФП
      */
     @Override
-    NeuroNet errorBackTrace(double[] in, double[] out, double eta);
+    NeuroNet teach(double[] in, double[] out, double eta);
 }

@@ -455,9 +455,9 @@ public class MainApplet2 extends JApplet {
                 input[0] = point.getPoint().x;
                 input[1] = point.getPoint().y;
                 if (point.isFromFirstCollection()) {
-                    neuroNet.errorBackTrace(input, success, eta);
+                    neuroNet.teach(input, success, eta);
                 } else {
-                    neuroNet.errorBackTrace(input, fail, eta);
+                    neuroNet.teach(input, fail, eta);
                 }
             }
         }

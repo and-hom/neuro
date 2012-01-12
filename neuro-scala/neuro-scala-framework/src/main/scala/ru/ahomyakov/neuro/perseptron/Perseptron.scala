@@ -4,7 +4,7 @@ import ru.ahomyakov.neuro.data.MongoDao
 import scala.Array
 
 class Perseptron(dao: MongoDao, layers: List[Layer])
-  extends ru.ahomyakov.neuro.base.Perseptron {
+  extends ru.ahomyakov.neuro.base.NeuroNet {
   /**
    * Зачитываем персептрон из хранилища
    */
@@ -29,7 +29,7 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
    * Обратное распространение ошибки, Прямой и
    * обратный ход при помощи системного стека
    */
-  def errorBackTrace(input: Array[Double],
+  def teach(input: Array[Double],
                      requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
     new Perseptron(dao,
@@ -71,7 +71,7 @@ class Perseptron(dao: MongoDao, layers: List[Layer])
   protected def calculateError(requiredOutput: Array[Double],
                                realOutput: Array[Double]): Array[Double] =
     (for (i <- 0 to requiredOutput.length - 1) yield
-      (requiredOutput(i) - realOutput(i)) *
+      (realOutput(i) - requiredOutput(i)) *
         requiredOutput(i) * (1 - requiredOutput(i))).toArray;
 
   override def toString = "Neuro network \n" + layers.size + " layers\n" +

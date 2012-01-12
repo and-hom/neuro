@@ -42,8 +42,8 @@ object Main {
         for (j <- 0 to 3) {
           def in = Array(int2double(i), int2double(j));
           def out = if (i + j < 3 || i + j > 4) Array(1d) else Array(0d);
-          net = net.errorBackTrace(in, out, 0.3)
-          perseptron = perseptron.errorBackTrace(in, out, 0.3)
+          net = net.teach(in, out, 0.3)
+          perseptron = perseptron.teach(in, out, 0.3)
 
 //          println("\nJava:\n" + net.toString);
 //          println("\nScala:\n" + perseptron.toString)

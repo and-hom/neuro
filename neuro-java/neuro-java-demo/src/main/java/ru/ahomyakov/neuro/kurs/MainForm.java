@@ -279,9 +279,9 @@ public class MainForm extends javax.swing.JFrame {
                 input[0] = point.getPoint().x;
                 input[1] = point.getPoint().y;
                 if (point.isFromFirstCollection()) {
-                    neuroNet.errorBackTrace(input, success, eta);
+                    neuroNet.teach(input, success, eta);
                 } else {
-                    neuroNet.errorBackTrace(input, fail, eta);
+                    neuroNet.teach(input, fail, eta);
                 }
             }
         }

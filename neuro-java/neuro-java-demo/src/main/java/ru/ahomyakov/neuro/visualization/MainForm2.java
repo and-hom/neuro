@@ -6,7 +6,7 @@
 package ru.ahomyakov.neuro.visualization;
 
 import ru.ahomyakov.neuro.PerseptronHelper;
-import ru.ahomyakov.neuro.base.Perseptron;
+import ru.ahomyakov.neuro.base.NeuroNet;
 import ru.ahomyakov.neuro.errors.IllegalInitDataException;
 import ru.ahomyakov.neuro.kurs.ExperimentalResult;
 import ru.ahomyakov.neuro.kurs.SofmPoint;
@@ -38,7 +38,7 @@ public class MainForm2 extends javax.swing.JFrame {
     private List<Point.Double> teachGroup2 = new LinkedList<Double>();
     private List<SofmPoint> sofmPoints = new LinkedList<SofmPoint>();
     private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
-    private Perseptron neuroNet;
+    private NeuroNet neuroNet;
     private SOFM sofm;
     private double eta = 0.3;
     private boolean fillAreas = false;
@@ -466,9 +466,9 @@ public class MainForm2 extends javax.swing.JFrame {
                 input[0] = point.getPoint().x;
                 input[1] = point.getPoint().y;
                 if (point.isFromFirstCollection()) {
-                    neuroNet.errorBackTrace(input, success, eta);
+                    neuroNet.teach(input, success, eta);
                 } else {
-                    neuroNet.errorBackTrace(input, fail, eta);
+                    neuroNet.teach(input, fail, eta);
                 }
             }
         }

@@ -28,7 +28,7 @@ public class NeuroNetImpl implements NeuroNet {
         layers.add(layer);
     }
 
-    public NeuroNetImpl errorBackTrace(double[] in, double[] out, double eta) {
+    public NeuroNetImpl teach(double[] in, double[] out, double eta) {
         double[] result = process(in);
         double[] error = VectorUtils.minus(out, result);
         ListIterator<Layer> iter = layers.listIterator(layers.size());

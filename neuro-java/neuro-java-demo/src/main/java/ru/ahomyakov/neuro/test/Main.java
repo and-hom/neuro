@@ -67,16 +67,16 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             test1[0] = 0;
             test1[1] = 0;
-            neuroNet.errorBackTrace(test1, no, 0.3);
+            neuroNet.teach(test1, no, 0.3);
             test1[0] = 1;
             test1[1] = 0;
-            neuroNet.errorBackTrace(test1, yes, 0.3);
+            neuroNet.teach(test1, yes, 0.3);
             test1[0] = 0;
             test1[1] = 1;
-            neuroNet.errorBackTrace(test1, yes, 0.3);
+            neuroNet.teach(test1, yes, 0.3);
             test1[0] = 1;
             test1[1] = 1;
-            neuroNet.errorBackTrace(test1, no, 0.3);
+            neuroNet.teach(test1, no, 0.3);
         }
 
         System.out.println("--------------------------------------------");
@@ -118,16 +118,16 @@ public class Main {
         for (int i = 0; i < 10000; i++) {
             test1[0] = 1;
             test1[1] = 1;
-            neuroNet.errorBackTrace(test1, yes, 1);
+            neuroNet.teach(test1, yes, 1);
             test1[0] = 0;
             test1[1] = 0;
-            neuroNet.errorBackTrace(test1, no, 1);
+            neuroNet.teach(test1, no, 1);
             test1[0] = 1;
             test1[1] = 0;
-            neuroNet.errorBackTrace(test1, yes, 1);
+            neuroNet.teach(test1, yes, 1);
             test1[0] = 0;
             test1[1] = 1;
-            neuroNet.errorBackTrace(test1, yes, 1);
+            neuroNet.teach(test1, yes, 1);
         }
 
         System.out.println("--------------------------------------------");

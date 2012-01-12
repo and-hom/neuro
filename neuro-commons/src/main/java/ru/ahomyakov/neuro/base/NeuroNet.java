@@ -1,7 +1,7 @@
 package ru.ahomyakov.neuro.base;
 
 
-public interface Perseptron {
+public interface NeuroNet {
 
     /**
      * @param in  вход
@@ -10,7 +10,7 @@ public interface Perseptron {
      *
      * @return возврат результата для унификации с ФП
      */
-    Perseptron errorBackTrace(double[] in, double[] out, double eta);
+    NeuroNet teach(double[] in, double[] out, double eta);
 
     double[] process(double[] in);
 }
