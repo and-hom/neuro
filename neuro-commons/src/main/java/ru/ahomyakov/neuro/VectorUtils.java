@@ -12,20 +12,29 @@ public class VectorUtils {
     }
 
     public static String printVector(double[] v) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append('\n');
-        for (int i = 0; i < v.length; i++) {
-            result.append(v[i] + "\t");
+        for (double aV : v) {
+            result.append(aV).append("\t");
         }
         return result.toString();
     }
 
     public static String printMatrix(double[][] m) {
-        StringBuffer result = new StringBuffer();
-        for (int i = 0; i < m.length; i++) {
+        StringBuilder result = new StringBuilder();
+        for (double[] aM : m) {
             result.append('\n');
-            for (int j = 0; j < m[i].length; j++)
-                result.append(m[i][j] + "\t");
+            for (double anAM : aM)
+                result.append(anAM).append("\t");
+        }
+        return result.toString();
+    }
+
+    public static String printMatrixT(double[][] m) {
+        StringBuilder result = new StringBuilder();
+        for (int j = 0; j < m[0].length; j++) {
+            result.append('\n');
+            for (double[] aM : m) result.append(aM[j]).append("\t");
         }
         return result.toString();
     }
