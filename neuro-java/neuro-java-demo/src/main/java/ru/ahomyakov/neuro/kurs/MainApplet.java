@@ -27,9 +27,9 @@ import java.util.List;
 public class MainApplet extends JApplet {
 
     private boolean teachMode = true;
-    private List<Double> teachGroup1 = new LinkedList<Double>();
-    private List<Double> teachGroup2 = new LinkedList<Double>();
-    private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
+    private List<Double> teachGroup1 = new LinkedList<>();
+    private List<Double> teachGroup2 = new LinkedList<>();
+    private List<ExperimentalResult> testGroup = new LinkedList<>();
     private NeuroNet neuroNet;
     private double eta = 0.3;
     private boolean fillAreas = false;
@@ -301,7 +301,7 @@ public class MainApplet extends JApplet {
     }//GEN-LAST:event_fillAreasButtonActionPerformed
 
     private List<ExperimentalResult> merge(List<Double> teachGroup1, List<Double> teachGroup2) {
-        List<ExperimentalResult> results = new ArrayList<ExperimentalResult>(teachGroup1.size() + teachGroup2.size() + 5);
+        List<ExperimentalResult> results = new ArrayList<>(teachGroup1.size() + teachGroup2.size() + 5);
         for (Double point : teachGroup1) {
             results.add(new ExperimentalResult(point, true));
         }

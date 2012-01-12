@@ -115,8 +115,8 @@ public class VisulizationPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private List<Point2D.Double> points1 = new LinkedList<Point2D.Double>();
-    private List<Point2D.Double> points2 = new LinkedList<Point2D.Double>();
+    private List<Point2D.Double> points1 = new LinkedList<>();
+    private List<Point2D.Double> points2 = new LinkedList<>();
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         Point2D.Double point = screen2virtual(evt.getPoint());

@@ -27,9 +27,9 @@ import java.util.List;
 public class MainForm extends javax.swing.JFrame {
 
     private boolean teachMode = true;
-    private List<Point.Double> teachGroup1 = new LinkedList<Double>();
-    private List<Point.Double> teachGroup2 = new LinkedList<Double>();
-    private List<ExperimentalResult> testGroup = new LinkedList<ExperimentalResult>();
+    private List<Point.Double> teachGroup1 = new LinkedList<>();
+    private List<Point.Double> teachGroup2 = new LinkedList<>();
+    private List<ExperimentalResult> testGroup = new LinkedList<>();
     private NeuroNet neuroNet;
     private double eta = 0.3;
     private boolean fillAreas = false;
@@ -305,7 +305,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_teachModeButtonActionPerformed
 
     private List<ExperimentalResult> merge(List<Double> teachGroup1, List<Double> teachGroup2) {
-        List<ExperimentalResult> results = new ArrayList<ExperimentalResult>(teachGroup1.size() + teachGroup2.size() + 5);
+        List<ExperimentalResult> results = new ArrayList<>(teachGroup1.size() + teachGroup2.size() + 5);
         for (Double point : teachGroup1) {
             results.add(new ExperimentalResult(point, true));
         }
