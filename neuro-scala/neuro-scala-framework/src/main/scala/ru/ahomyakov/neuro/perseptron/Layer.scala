@@ -83,8 +83,10 @@ class Layer(weights: Array[Array[Double]],
   def correctWeights(err: Array[Double],
                      prevOutput: Array[Double],
                      teachingCoeff: Double): Layer =
-    new Layer(correctWeightsMatrix(err, prevOutput, teachingCoeff),
-      correctShift(err, teachingCoeff), aFunc, dAFuncDx);
+    new Layer(
+      correctWeightsMatrix(err, prevOutput, teachingCoeff),
+      correctShift(err, teachingCoeff),
+      aFunc, dAFuncDx);
 
   /**
    * Корректировка вектора смещения

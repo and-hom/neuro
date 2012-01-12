@@ -11,14 +11,11 @@ class Perseptron(layers: List[Layer])
   def this(dao: Dao, id: String) =
     this (dao.findById(id).map(o =>
       new Layer(o, x => AFunctions.sigma(x), x => AFunctions.dSigma(x))
-    ));
+    ).toList);
 
   override def reset() = new Perseptron(
     layers.map(layer => layer.reset()));
 
-  /**
-   * f2(f1(input*A_1)*A_2)....
-   */
   override def process(input: Array[Double]): Array[Double] =
     layers.foldLeft(input)(
       (vect: Array[Double], layer: Layer) => layer.apply(vect));
@@ -37,26 +34,30 @@ class Perseptron(layers: List[Layer])
   override def teach(input: Array[Double],
                      requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
-    new Perseptron(mapLayers(layers, input,
+    new Perseptron(correctLayers(layers, input,
       errs(input, requiredOutput, layers),
       teachingCoeff));
 
-  protected def mapLayers(layers: List[Layer], input: Array[Double], errs: Seq[Array[Double]],
-                          teachingCoeff: Double): List[Layer] =
+  /**
+   * Процедура исправления весов и получения нового списка слоёв.
+   */
+  protected def correctLayers(layers: List[Layer],
+                              input: Array[Double],
+                              errs: Seq[Array[Double]],
+                              teachingCoeff: Double): List[Layer] =
     if (layers.size == 0) List()
     else layers.head.correctWeights(errs.head, input, teachingCoeff) ::
-      mapLayers(layers.tail, layers.head.apply(input), errs.tail, teachingCoeff);
+      correctLayers(layers.tail, layers.head.apply(input), errs.tail, teachingCoeff);
 
   /**
    * <strong>Распространение ошибки по ещё не модифицированной сети.</strong><br/>
    * Используем системный стек (рекурсия).<br/>
-   * Если мы прошли последний слой и осталось 0 слоёв, то input - это выход
-   * последнего слоя и в данном случае - выход сети. то есть
-   * (input-requiredOutput) и будет ошибка.<br/>
+   * Если мы на последнем слое, считаем ошибку последнего слоя и заносим в список.<br/>
    * Если ещё есть непройденные слои, считаем хвост списка ошибок далее. Затем
    * в голову списка ошибок добавляем результат обратного распространения
    * для текущего слоя. То есть, берём голову полученного списка ошибок,
-   * прогоняем через слой назад и добавляем 1-м элементом.
+   * прогоняем через слой назад и добавляем 1-м элементом. <br/>
+   * При подсчёте ошибок всех слоёв, кроме последнего
    */
   protected def errs(input: Array[Double],
                      requiredOutput: Array[Double],
