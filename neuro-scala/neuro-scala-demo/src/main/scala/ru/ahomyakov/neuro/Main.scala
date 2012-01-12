@@ -2,8 +2,7 @@ package ru.ahomyakov.neuro
 
 import base.{BarierFunction, SigmaFunction}
 import data.MongoDao
-import perseptron.impl.functions.{BarierFunction, SigmaFunction}
-import perseptron.{AFunctions, Layer, Perseptron}
+import perseptron.{ Layer, Perseptron}
 import java.util.Arrays
 import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, PerseptronImpl}
 
@@ -17,8 +16,8 @@ object Main {
     val weights2: Array[Array[Double]] = Array(Array(0d, 0.1, -0.1));
     var scalaPerseptron = new Perseptron(
       List(
-        new Layer(weights1, Array(0d, 0d, 0d), AFunctions.sigma _, AFunctions.dSigma _),
-        new Layer(weights2, Array(0d), AFunctions.step _, AFunctions.dStep _))
+        new Layer(weights1, Array(0d, 0d, 0d), new SigmaFunction()),
+        new Layer(weights2, Array(0d), new BarierFunction()))
     );
 
 
