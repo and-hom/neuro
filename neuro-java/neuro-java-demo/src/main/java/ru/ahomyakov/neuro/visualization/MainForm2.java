@@ -142,8 +142,8 @@ public class MainForm2 extends javax.swing.JFrame {
                     pnt.x = x;
                     pnt.y = y;
                     Double point = screen2virtual(pnt, drawPanel);
-                    src[0] = point.x;
-                    src[1] = point.y;
+                    src[0] = point.x * 100;
+                    src[1] = point.y * 100;
                     double n1 = neuroNet1.process(src)[0];
                     double n2 = neuroNet2.process(src)[0];
                     if (n1 >= 0.5 && n2 > 0.5) {
@@ -476,14 +476,14 @@ public class MainForm2 extends javax.swing.JFrame {
         double[] input = new double[2];
         for (int i = 0; i < selectedCycleCount; i++) {
             for (ExperimentalResult point : points) {
-                input[0] = point.getPoint().x;
-                input[1] = point.getPoint().y;
+                input[0] = point.getPoint().x * 100;
+                input[1] = point.getPoint().y * 100;
                 if (point.isFromFirstCollection()) {
-                    neuroNet1.teach(input, success, eta);
-                    neuroNet2.teach(input, success, eta);
+                    neuroNet1 = neuroNet1.teach(input, success, eta);
+                    neuroNet2 = neuroNet2.teach(input, success, eta);
                 } else {
-                    neuroNet1.teach(input, fail, eta);
-                    neuroNet2.teach(input, fail, eta);
+                    neuroNet1 = neuroNet1.teach(input, fail, eta);
+                    neuroNet2 = neuroNet2.teach(input, fail, eta);
                 }
             }
         }
