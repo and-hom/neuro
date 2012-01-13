@@ -6,16 +6,14 @@ import util.Random
 import ru.ahomyakov.neuro.VectorUtils
 import ru.ahomyakov.neuro.base.VectorFunction
 
-class Layer(weights: Array[Array[Double]],
+class Layer(weights: Matrix,
             shift: Array[Double],
             aFunc: VectorFunction) {
   /**
    * Инициализация слоя из сохранённого в б/д json-объекта
    */
   def this(o: DBObject, aFunc: VectorFunction) =
-    this (o.get("matrix").toString.split("::").
-      map(col => col.split(":").
-      map(element => java.lang.Double.parseDouble(element))),
+    this (new Matrix(o.get("matrix").toString),
       o.get("shift").toString.split(":").
         map(element => java.lang.Double.parseDouble(element)),
       aFunc);
@@ -26,10 +24,7 @@ class Layer(weights: Array[Array[Double]],
   def this(inputs: Int,
            outputs: Int,
            aFunc: VectorFunction) =
-    this (
-      (for (i <- 0 to outputs - 1) yield
-        (for (j <- 0 to inputs - 1) yield
-          Random.nextDouble() % 1D).toArray).toArray,
+    this (new Matrix(inputs, outputs),
       (for (j <- 0 to outputs - 1) yield
         Random.nextDouble() % 1D).toArray,
       aFunc);
@@ -38,9 +33,7 @@ class Layer(weights: Array[Array[Double]],
    * Объект для сохранения в mongo
    */
   def toDatabaseObject: DBObject =
-    MongoDBObject("matrix" -> weights.foldLeft("")
-      ((str1, row) => (str1 + (if (str1.isEmpty) "" else "::") + row.foldLeft("")
-        ((str2, cell) => (str2 + (if (str2.isEmpty) "" else ":") + cell)))),
+    MongoDBObject("matrix" -> weights.serialize(),
       "shift" -> shift.foldLeft("")
         ((str, elem) => if (str.isEmpty) elem.toString else str + ":" + elem));
 
@@ -55,7 +48,7 @@ class Layer(weights: Array[Array[Double]],
    * Применить матрицу весов и вектор сдвига
    */
   def applyWeightsAndShift(input: Array[Double]): Array[Double] =
-    Math.sumV(weights.map(x => Math.multiplyVScalar(input, x)), shift);
+    Math.sumV(weights.mapT(x => Math.multiplyVScalar(input, x.toArray)).toArray, shift);
 
   /**
    * Применить ф-цию активности
@@ -67,9 +60,7 @@ class Layer(weights: Array[Array[Double]],
    * Обратное распространение ошибки через матрицу весов
    */
   def errorBackTrace(err: Array[Double]): Array[Double] =
-    (for (i <- 0 to weights(0).length - 1) yield
-      (for (j <- 0 to weights.length - 1) yield
-        err(j) * weights(j)(i)).foldLeft(0D)(_ + _)).toArray;
+    weights.map(row => Math.multiplyVScalar(err, row.toArray)).toArray;
 
   /**
    * Производная от ф-ции активности
@@ -98,18 +89,17 @@ class Layer(weights: Array[Array[Double]],
    * Корректировка весов слоя
    */
   protected def correctWeightsMatrix(err: Array[Double], prevOutput: Array[Double],
-                                     teachingCoeff: Double): Array[Array[Double]] =
-    (for (j <- 0 to weights.length - 1) yield
-      ((for (i <- 0 to weights(j).length - 1) yield
-        weights(j)(i) + err(j) * prevOutput(i) * teachingCoeff).toArray)).toArray;
+                                     teachingCoeff: Double): Matrix =
+    weights.sum(prevOutput(_) * err(_) * teachingCoeff);
 
-  def reset(): Layer = new Layer(weights.length, weights(0).length, aFunc);
+
+  def reset(): Layer = new Layer(weights.height(), weights.width(), aFunc);
 
   /**
    * Строковое представление для отладки
    */
-  override def toString = "Layer\n " + weights(0).length +
-    " inputs\n" + weights.length + " outputs\n" +
-    "weights: " + VectorUtils.printMatrixT(weights) +
+  override def toString = "Layer\n " + weights.width() +
+    " inputs\n" + weights.height() + " outputs\n" +
+    "weights:\n" + weights.toString +
     "\nshift: " + VectorUtils.printVector(shift) + "\n";
 }

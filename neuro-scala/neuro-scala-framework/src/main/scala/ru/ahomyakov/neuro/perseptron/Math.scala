@@ -5,6 +5,9 @@ object Math {
   def sumV(v1: Array[Double], v2: Array[Double]): Array[Double] =
     (for (i <- 0 to v1.length - 1) yield v1(i) + v2(i)).toArray;
 
+  def sumV(v1: IndexedSeq[Double], v2: IndexedSeq[Double]): Array[Double] =
+    (for (i <- 0 to v1.length - 1) yield v1(i) + v2(i)).toArray;
+
   def substituteV(v1: Array[Double], v2: Array[Double]): Array[Double] =
     (for (i <- 0 to v1.length - 1) yield v1(i) - v2(i)).toArray;
 

@@ -2,18 +2,16 @@ package ru.ahomyakov.neuro
 
 import base.{BarierFunction, SigmaFunction}
 import data.MongoDao
-import perseptron.{ Layer, Perseptron}
 import java.util.Arrays
+import perseptron.{Matrix, Layer, Perseptron}
 import ru.ahomyakov.neuro.perseptron.impl.{LayerImpl, PerseptronImpl}
 
 
 object Main {
   def main(args: Array[String]) {
     // инициализация персепторна случайными весами
-    val weights1: Array[Array[Double]] = Array(Array(0.1, -0.2),
-      Array(-0.1, 0.1),
-      Array(0d, 0.1));
-    val weights2: Array[Array[Double]] = Array(Array(0d, 0.1, -0.1));
+    val weights1: Matrix = new Matrix(List(List(0.1, -0.1, 0d), List(-0.2, 0.1, 0.1)));
+    val weights2: Matrix = new Matrix(List(List(0d), List(0.1), List(-0.1)));
     var scalaPerseptron = new Perseptron(
       List(
         new Layer(weights1, Array(0d, 0d, 0d), new SigmaFunction()),
