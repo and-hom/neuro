@@ -25,8 +25,7 @@ class Layer(weights: Matrix,
            aFunc: VectorFunction) =
     this (new Matrix(inputs, outputs),
       (for (j <- 0 to outputs - 1) yield
-        Random.nextDouble() % 1D).toArray,
-      aFunc);
+        Random.nextDouble() % 1D), aFunc);
 
   /**
    * Объект для сохранения в mongo
@@ -47,7 +46,7 @@ class Layer(weights: Matrix,
    * Применить матрицу весов и вектор сдвига
    */
   def applyWeightsAndShift(input: Seq[Double]): Seq[Double] =
-    Math.sumV(weights.mapT(x => Math.multiplyVScalar(input, x.toArray)), shift);
+    Math.sumV(weights.mapT(x => Math.multiplyVScalar(input, x)), shift);
 
   /**
    * Применить ф-цию активности
@@ -59,7 +58,7 @@ class Layer(weights: Matrix,
    * Обратное распространение ошибки через матрицу весов
    */
   def errorBackTrace(err: Seq[Double]): Seq[Double] =
-    weights.map(row => Math.multiplyVScalar(err, row.toArray));
+    weights.map(row => Math.multiplyVScalar(err, row));
 
   /**
    * Производная от ф-ции активности
