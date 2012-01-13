@@ -16,8 +16,8 @@ class Perseptron(layers: List[Layer])
     layers.map(layer => layer.reset()));
 
   override def process(input: Array[Double]): Array[Double] =
-    layers.foldLeft(input)(
-      (vect: Array[Double], layer: Layer) => layer.apply(vect));
+    layers.foldLeft(input.toSeq)(
+      (vect: Seq[Double], layer: Layer) => layer.apply(vect)).toArray;
 
   /**
    * Сохранить персептрон в базу
@@ -33,6 +33,11 @@ class Perseptron(layers: List[Layer])
   override def teach(input: Array[Double],
                      requiredOutput: Array[Double],
                      teachingCoeff: Double): Perseptron =
+    teach(input.toSeq, requiredOutput.toSeq, teachingCoeff);
+
+  def teach(input: Seq[Double],
+                     requiredOutput: Seq[Double],
+                     teachingCoeff: Double): Perseptron =
     new Perseptron(correctLayers(layers, input,
       errs(input, requiredOutput, layers),
       teachingCoeff));
@@ -41,8 +46,8 @@ class Perseptron(layers: List[Layer])
    * Процедура исправления весов и получения нового списка слоёв.
    */
   protected def correctLayers(layers: List[Layer],
-                              input: Array[Double],
-                              errs: Seq[Array[Double]],
+                              input: Seq[Double],
+                              errs: Seq[Seq[Double]],
                               teachingCoeff: Double): List[Layer] =
     if (layers.size == 0) List()
     else layers.head.correctWeights(errs.head, input, teachingCoeff) ::
@@ -58,35 +63,35 @@ class Perseptron(layers: List[Layer])
    * прогоняем через слой назад и добавляем 1-м элементом. <br/>
    * При подсчёте ошибок всех слоёв, кроме последнего
    */
-  protected def errs(input: Array[Double],
-                     requiredOutput: Array[Double],
-                     layers: List[Layer]): List[Array[Double]] =
+  protected def errs(input: Seq[Double],
+                     requiredOutput: Seq[Double],
+                     layers: List[Layer]): List[Seq[Double]] =
     if (layers.size == 1) List(calculateErrorLast(input, requiredOutput, layers.head))
     else errsAdd(layers.head, layers.tail.head, input,
       errs(layers.head.apply(input), requiredOutput, layers.tail));
 
-  protected def errsAdd(layer: Layer, nextLayer: Layer, input: Array[Double],
-                        errs: List[Array[Double]]): List[Array[Double]] =
-    calculateErrorInternal(input, nextLayer.errorBackTrace(errs.head), layer).toArray :: errs;
+  protected def errsAdd(layer: Layer, nextLayer: Layer, input: Seq[Double],
+                        errs: List[Seq[Double]]): List[Seq[Double]] =
+    calculateErrorInternal(input, nextLayer.errorBackTrace(errs.head), layer) :: errs;
 
   /**
    * Вычисление ошибки для последнего слоя
    */
-  protected def calculateErrorLast(input: Array[Double],
-                                   requiredOutput: Array[Double],
-                                   layer: Layer): Array[Double] =
+  protected def calculateErrorLast(input: Seq[Double],
+                                   requiredOutput: Seq[Double],
+                                   layer: Layer): Seq[Double] =
     calculateErrorLast1(layer.applyWeightsAndShift(input), requiredOutput, layer);
 
-  protected def calculateErrorLast1(weightedInput: Array[Double],
-                                    requiredOutput: Array[Double],
-                                    layer: Layer): Array[Double] =
+  protected def calculateErrorLast1(weightedInput: Seq[Double],
+                                    requiredOutput: Seq[Double],
+                                    layer: Layer): Seq[Double] =
     Math.multiplyV(Math.substituteV(requiredOutput, layer.applyFunction(weightedInput)),
       layer.dF(weightedInput));
 
 
-  protected def calculateErrorInternal(input: Array[Double],
-                                       err: Array[Double],
-                                       layer: Layer): Array[Double] =
+  protected def calculateErrorInternal(input: Seq[Double],
+                                       err: Seq[Double],
+                                       layer: Layer): Seq[Double] =
     Math.multiplyV(err, layer.dF(layer.applyWeightsAndShift(input)));
 
 

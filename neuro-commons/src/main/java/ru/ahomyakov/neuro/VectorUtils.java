@@ -1,5 +1,7 @@
 package ru.ahomyakov.neuro;
 
+import java.util.Collection;
+
 public class VectorUtils {
     public static double[] minus(double[] a, double[] b) {
         if (a.length != b.length)
@@ -12,6 +14,15 @@ public class VectorUtils {
     }
 
     public static String printVector(double[] v) {
+        StringBuilder result = new StringBuilder();
+        result.append('\n');
+        for (double aV : v) {
+            result.append(aV).append("\t");
+        }
+        return result.toString();
+    }
+
+    public static String printVector(Collection<Double> v) {
         StringBuilder result = new StringBuilder();
         result.append('\n');
         for (double aV : v) {

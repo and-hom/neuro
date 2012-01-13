@@ -3,11 +3,10 @@ package ru.ahomyakov.neuro.perseptron
 import com.mongodb.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
 import util.Random
-import ru.ahomyakov.neuro.VectorUtils
 import ru.ahomyakov.neuro.base.VectorFunction
 
 class Layer(weights: Matrix,
-            shift: Array[Double],
+            shift: Seq[Double],
             aFunc: VectorFunction) {
   /**
    * Инициализация слоя из сохранённого в б/д json-объекта
@@ -41,38 +40,38 @@ class Layer(weights: Matrix,
   /**
    * Выполнить преобразование слоя
    */
-  def apply(input: Array[Double]): Array[Double] =
+  def apply(input: Seq[Double]): Seq[Double] =
     applyFunction(applyWeightsAndShift(input));
 
   /**
    * Применить матрицу весов и вектор сдвига
    */
-  def applyWeightsAndShift(input: Array[Double]): Array[Double] =
-    Math.sumV(weights.mapT(x => Math.multiplyVScalar(input, x.toArray)).toArray, shift);
+  def applyWeightsAndShift(input: Seq[Double]): Seq[Double] =
+    Math.sumV(weights.mapT(x => Math.multiplyVScalar(input, x.toArray)), shift);
 
   /**
    * Применить ф-цию активности
    */
-  def applyFunction(input: Array[Double]): Array[Double] = aFunc.f(input);
+  def applyFunction(input: Seq[Double]): Seq[Double] = aFunc.f(input.toArray).toList;
 
 
   /**
    * Обратное распространение ошибки через матрицу весов
    */
-  def errorBackTrace(err: Array[Double]): Array[Double] =
-    weights.map(row => Math.multiplyVScalar(err, row.toArray)).toArray;
+  def errorBackTrace(err: Seq[Double]): Seq[Double] =
+    weights.map(row => Math.multiplyVScalar(err, row.toArray));
 
   /**
    * Производная от ф-ции активности
    */
-  def dF(input: Array[Double]): Array[Double] = aFunc.df(input);
+  def dF(input: Seq[Double]): Seq[Double] = aFunc.df(input.toArray).toSeq;
 
 
   /**
    * Создание нового слоя с откорректированной матрицей весов
    */
-  def correctWeights(err: Array[Double],
-                     prevOutput: Array[Double],
+  def correctWeights(err: Seq[Double],
+                     prevOutput: Seq[Double],
                      teachingCoeff: Double): Layer =
     new Layer(
       correctWeightsMatrix(err, prevOutput, teachingCoeff),
@@ -82,13 +81,13 @@ class Layer(weights: Matrix,
   /**
    * Корректировка вектора смещения
    */
-  protected def correctShift(err: Array[Double], teachingCoeff: Double): Array[Double] =
+  protected def correctShift(err: Seq[Double], teachingCoeff: Double): Seq[Double] =
     Math.sumV(shift, err.map(e => e * teachingCoeff));
 
   /**
    * Корректировка весов слоя
    */
-  protected def correctWeightsMatrix(err: Array[Double], prevOutput: Array[Double],
+  protected def correctWeightsMatrix(err: Seq[Double], prevOutput: Seq[Double],
                                      teachingCoeff: Double): Matrix =
     weights.sum(prevOutput(_) * err(_) * teachingCoeff);
 
@@ -101,5 +100,8 @@ class Layer(weights: Matrix,
   override def toString = "Layer\n " + weights.width() +
     " inputs\n" + weights.height() + " outputs\n" +
     "weights:\n" + weights.toString +
-    "\nshift: " + VectorUtils.printVector(shift) + "\n";
+    "\nshift: " + printVector(shift) + "\n";
+
+  protected def printVector(v: Seq[Double]) =
+    v.foldLeft("")((str, el) => (if (str.isEmpty) el.toString else str + "\t" + el))
 }

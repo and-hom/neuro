@@ -14,8 +14,8 @@ object Main {
     val weights2: Matrix = new Matrix(List(List(0d), List(0.1), List(-0.1)));
     var scalaPerseptron = new Perseptron(
       List(
-        new Layer(weights1, Array(0d, 0d, 0d), new SigmaFunction()),
-        new Layer(weights2, Array(0d), new BarierFunction()))
+        new Layer(weights1, List(0d, 0d, 0d), new SigmaFunction()),
+        new Layer(weights2, List(0d), new BarierFunction()))
     );
 
 
