@@ -21,13 +21,13 @@ uniquely identify this project -->
         <module>neuro-scala</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>scala-tools.org</id>-->
+            <!--<name>Scala-tools Maven2 Repository</name>-->
+            <!--<url>http://scala-tools.org/repo-releases</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <pluginRepositories>
         <pluginRepository>
@@ -135,23 +135,23 @@ uniquely identify this project -->
                 <version>${scala.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.mongodb.casbah</groupId>
-                <artifactId>casbah-query_${scala.version}</artifactId>
+                <groupId>org.mongodb</groupId>
+                <artifactId>casbah-query_${scala.casbah.version}</artifactId>
                 <version>${casbah.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.mongodb.casbah</groupId>
-                <artifactId>casbah-core_${scala.version}</artifactId>
+                <groupId>org.mongodb</groupId>
+                <artifactId>casbah-core_${scala.casbah.version}</artifactId>
                 <version>${casbah.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.mongodb.casbah</groupId>
-                <artifactId>casbah-commons_${scala.version}</artifactId>
+                <groupId>org.mongodb</groupId>
+                <artifactId>casbah-commons_${scala.casbah.version}</artifactId>
                 <version>${casbah.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.mongodb.casbah</groupId>
-                <artifactId>casbah-gridfs_${scala.version}</artifactId>
+                <groupId>org.mongodb</groupId>
+                <artifactId>casbah-gridfs_${scala.casbah.version}</artifactId>
                 <version>${casbah.version}</version>
             </dependency>
             <dependency>
@@ -162,8 +162,9 @@ uniquely identify this project -->
         </dependencies>
     </dependencyManagement>
     <properties>
-        <scala.version>2.9.1</scala.version>
-        <casbah.version>2.1.5-1</casbah.version>
+        <scala.version>2.11.6</scala.version>
+        <scala.casbah.version>2.11</scala.casbah.version>
+        <casbah.version>2.7.1</casbah.version>
         <neuro.version>1.0</neuro.version>
     </properties>
 

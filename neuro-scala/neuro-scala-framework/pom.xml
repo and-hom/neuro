@@ -34,20 +34,20 @@
             <artifactId>scala-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-query_${scala.version}</artifactId>
+            <groupId>org.mongodb</groupId>
+            <artifactId>casbah-query_${scala.casbah.version}</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-core_${scala.version}</artifactId>
+            <groupId>org.mongodb</groupId>
+            <artifactId>casbah-core_${scala.casbah.version}</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-commons_${scala.version}</artifactId>
+            <groupId>org.mongodb</groupId>
+            <artifactId>casbah-commons_${scala.casbah.version}</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mongodb.casbah</groupId>
-            <artifactId>casbah-gridfs_${scala.version}</artifactId>
+            <groupId>org.mongodb</groupId>
+            <artifactId>casbah-gridfs_${scala.casbah.version}</artifactId>
         </dependency>
     </dependencies>
 

@@ -37,7 +37,7 @@ object Main {
     for (i <- 1 to 10000) {
       for (i <- 0 to 3) {
         for (j <- 0 to 3) {
-          def in = Array(int2double(i), int2double(j));
+          def in = Array(i.toDouble, j.toDouble);
           def out = if (i + j < 3 || i + j > 4) Array(1d) else Array(0d);
           javaPerseptron = javaPerseptron.teach(in, out, 0.3)
           scalaPerseptron = scalaPerseptron.teach(in, out, 0.3)
@@ -51,7 +51,7 @@ object Main {
 
     for (i <- 0 to 3) {
       for (j <- 0 to 3) {
-        def in = Array(int2double(i), int2double(j));
+        def in = Array(i.toDouble, j.toDouble);
         def answer = if (i + j < 3 || i + j > 4) 1d else 0d;
         val etaOut: Double = javaPerseptron.process(in)(0)
         val realOut: Double = scalaPerseptron.process(in)(0)
