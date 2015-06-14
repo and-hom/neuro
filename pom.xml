@@ -19,6 +19,7 @@ uniquely identify this project -->
         <module>neuro-commons</module>
         <module>neuro-java</module>
         <module>neuro-scala</module>
+        <module>ru-examples</module>
     </modules>
 
     <!--<repositories>-->
